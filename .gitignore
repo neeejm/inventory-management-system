@@ -34,3 +34,7 @@ build/
 
 ### DRAWIO ###
 *.drawio.bkp
+
+### MY ###
+*.env.properties
+!.example.env.properties

@@ -1,0 +1,12 @@
+spring:
+  config:
+    import: 'optional:file:.local.env.properties'
+  banner:
+    location: 'banner.txt'
+  datasource:
+    url: 'jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}'
+    username: '${DB_USERNAME}'
+    password: '${DB_PASSWORD}'
+
+server:
+  port: '${SERVER_PORT:8089}'
