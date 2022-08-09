@@ -1,8 +1,8 @@
 package com.neeejm.inventory.models;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class Stock {
     @GeneratedValue
     private UUID id;
 
-    @NotNull
+    @NonNull
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private Address address;
 }

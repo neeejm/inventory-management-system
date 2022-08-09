@@ -1,10 +1,11 @@
 package com.neeejm.inventory.models;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,15 +20,19 @@ public class Address {
     @GeneratedValue
     private UUID id;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     private String country;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     private String city;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     private String street;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     private String zipCode;
 }

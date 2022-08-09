@@ -4,20 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class StockProduct {
+public class OrderProduct {
     @EmbeddedId
-    private StockProductId id;
+    private OrderProductId orderProductId;
 
     @ManyToOne
-    @MapsId("stockId")
-    private Stock stock;
+    @MapsId("orderId")
+    private Order order;
 
     @ManyToOne
     @MapsId("productId")
@@ -26,4 +28,9 @@ public class StockProduct {
     @NonNull
     @Column(nullable = false)
     private Integer quantity;
+
+    @NonNull
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderDate;
 }

@@ -1,8 +1,8 @@
 package com.neeejm.inventory.models;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "\"order\"")
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -19,22 +20,27 @@ public class Order {
     @GeneratedValue
     private UUID id;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     private String reference;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @NotNull
+    @NonNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
