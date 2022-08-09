@@ -1,9 +1,7 @@
 package com.neeejm.inventory.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,4 +33,8 @@ public class Address {
     @NonNull
     @Column(nullable = false)
     private String zipCode;
+
+    @Column(nullable = false)
+    @ColumnDefault("true")
+    private Boolean isPrimary;
 }

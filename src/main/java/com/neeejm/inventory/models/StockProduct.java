@@ -15,10 +15,12 @@ public class StockProduct {
     @EmbeddedId
     private StockProductId id;
 
+    @NonNull
     @ManyToOne
     @MapsId("stockId")
     private Stock stock;
 
+    @NonNull
     @ManyToOne
     @MapsId("productId")
     private Product product;

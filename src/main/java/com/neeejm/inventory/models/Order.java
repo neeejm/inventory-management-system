@@ -49,6 +49,10 @@ public class Order {
 
     private String invoiceUrl;
 
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Client client;
+
     public enum Type {
         PURCHASE, SALE
     }
