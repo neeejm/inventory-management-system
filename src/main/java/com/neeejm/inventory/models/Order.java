@@ -53,6 +53,10 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
+
     public enum Type {
         PURCHASE, SALE
     }
