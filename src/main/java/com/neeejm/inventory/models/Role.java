@@ -3,10 +3,9 @@ package com.neeejm.inventory.models;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,13 +13,19 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue
     private UUID id;
 
     @Column(nullable = false)
     private RoleName name;
+
+    @ManyToMany
+    @JoinTable(
+            inverseJoinColumns = { @JoinColumn(name = "privilege_id") }
+    )
+    private Set<Privilege> privileges;
 
     public enum  RoleName {
         ROLE_SALES,
