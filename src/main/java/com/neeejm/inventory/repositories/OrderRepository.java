@@ -1,11 +1,11 @@
 package com.neeejm.inventory.repositories;
 
-import com.neeejm.inventory.models.Address;
+import com.neeejm.inventory.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface AddressRepo extends JpaRepository<Address, UUID> {
+public interface OrderRepository extends JpaRepository<Order, UUID> {
 }

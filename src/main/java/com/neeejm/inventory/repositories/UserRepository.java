@@ -1,11 +1,11 @@
 package com.neeejm.inventory.repositories;
 
-import com.neeejm.inventory.models.Stock;
+import com.neeejm.inventory.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface StockRepo extends JpaRepository<Stock, UUID> {
+public interface UserRepository extends JpaRepository<User, UUID> {
 }
