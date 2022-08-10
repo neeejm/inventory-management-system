@@ -1,19 +1,17 @@
 package com.neeejm.inventory.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
+@NoArgsConstructor
 public class Company extends Client{
-    @NonNull
     @Column(nullable = false)
     private String name;
 }

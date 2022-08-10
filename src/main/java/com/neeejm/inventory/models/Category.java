@@ -2,18 +2,18 @@ package com.neeejm.inventory.models;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Data@AllArgsConstructor
-@RequiredArgsConstructor
-public class Category {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category extends BaseEntity {
     @Column(nullable = false)
     private String name;
 

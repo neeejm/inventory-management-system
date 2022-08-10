@@ -1,10 +1,7 @@
 package com.neeejm.inventory.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,14 +11,20 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue
     private UUID id;
 
-    @NonNull
     @Column(nullable = false)
-    private String name;
+    private RoleName name;
+
+    public enum  RoleName {
+        ROLE_SALES,
+        ROLE_PURCHASE,
+        ROLE_ADMIN
+    }
 }

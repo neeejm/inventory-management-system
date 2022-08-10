@@ -5,34 +5,25 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
-public abstract class Client {
-    @Id
-    @GeneratedValue
-    protected UUID id;
-
+public abstract class Client extends BaseEntity {
     protected String displayName;
 
-    @NonNull
     @Column(nullable = false)
     protected String email;
 
-    @NonNull
     @Column(nullable = false)
     protected String primaryPhone;
 
     protected String secondaryPhone;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "address_id"
-    )
+    @JoinColumn(name = "address_id")
     private Set<Address> addresses = new HashSet<>();
 }

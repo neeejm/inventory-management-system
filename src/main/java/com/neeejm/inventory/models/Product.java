@@ -1,9 +1,6 @@
 package com.neeejm.inventory.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,26 +8,20 @@ import java.util.UUID;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class Product {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@NoArgsConstructor
+public class Product extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @NonNull
     @Column(nullable = false)
     private String reference;
 
-    @NonNull
     @Column(nullable = false)
     private BigDecimal costPrice;
 
-    @NonNull
     @Column(nullable = false)
     private BigDecimal unitPrice;
 
@@ -39,7 +30,6 @@ public class Product {
 
     private String imageUrl;
 
-    @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
     private Category subCategory;
 }

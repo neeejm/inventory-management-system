@@ -1,45 +1,35 @@
 package com.neeejm.inventory.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "\"order\"")
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class Order {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@NoArgsConstructor
+public class Order extends BaseEntity {
     @Column(nullable = false)
     private String reference;
 
-    @NonNull
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NonNull
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
 
-    @NonNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @NonNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -49,11 +39,9 @@ public class Order {
 
     private String invoiceUrl;
 
-    @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
