@@ -13,9 +13,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person extends Client {
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 }
