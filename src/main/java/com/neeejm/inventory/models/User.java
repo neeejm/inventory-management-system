@@ -35,6 +35,5 @@ public class User extends BaseEntity{
     @JoinTable(
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
-
     private Set<Role> roles = new HashSet<>();
 }

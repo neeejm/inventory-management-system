@@ -23,7 +23,11 @@ public abstract class Client extends BaseEntity {
 
     protected String secondaryPhone;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @JoinColumn(name = "address_id")
     private Set<Address> addresses = new HashSet<>();
 }

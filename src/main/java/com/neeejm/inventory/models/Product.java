@@ -2,9 +2,11 @@ package com.neeejm.inventory.models;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 @Data

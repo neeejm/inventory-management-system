@@ -14,6 +14,10 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stock extends BaseEntity{
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Address address;
 }
