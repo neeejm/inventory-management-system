@@ -26,9 +26,11 @@ public abstract class BaseEntity implements Serializable {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    @Builder.Default
+    private Date createdAt = new Date();
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedAt;
+    @Builder.Default
+    private Date modifiedAt = new Date();
 }
