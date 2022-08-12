@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class AddressServiceImplTest {
-    private final String ADDRESS_NOT_FOUND_MSG = "Address not found";
+    private final String ADDRESS_NOT_FOUND_MSG = "Entity not found";
     @Mock
     private AddressRepository addressRepository;
     @Captor

@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
-    private final String PRODUCT_NOT_FOUND_MSG = "Product not found";
+    private final String PRODUCT_NOT_FOUND_MSG = "Entity not found";
     @Mock
     private ProductRepository productRepository;
     @Captor
