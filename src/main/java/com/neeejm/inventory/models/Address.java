@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -14,15 +16,20 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address extends BaseEntity {
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String country;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String city;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String street;
 
+    @NotBlank(message = "Can't be blank")
+    @Pattern(regexp = "^\\d{5}(?:[- ]?\\d{4})?$")
     @Column(nullable = false)
     private String zipCode;
 

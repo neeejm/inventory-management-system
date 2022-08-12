@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -15,10 +16,12 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stock extends BaseEntity{
+    @NotNull(message = "Can't be null")
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            optional = false
     )
     private Address address;
 }

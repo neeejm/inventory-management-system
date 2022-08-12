@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,22 +19,32 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseEntity{
+    @NotBlank(message = "Can't be blank")
+    @Email(message = "Not a valid email")
     @Column(nullable = false)
     private String email;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String username;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String password;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String firstName;
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @NotEmpty(message = "Can't be empty")
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST}
+    )
     @JoinTable(
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )

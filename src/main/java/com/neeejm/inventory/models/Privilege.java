@@ -1,5 +1,6 @@
 package com.neeejm.inventory.models;
 
+import com.neeejm.inventory.customvalidator.ValidEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -23,6 +25,8 @@ public class Privilege implements Serializable {
     @GeneratedValue
     private UUID id;
 
+    @NotBlank(message = "Can't be blank")
+    @ValidEnum(enumClass = PrivilegeName.class)
     @Column(nullable = false)
     private PrivilegeName name;
 
