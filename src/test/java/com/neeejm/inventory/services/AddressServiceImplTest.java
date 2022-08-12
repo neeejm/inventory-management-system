@@ -2,7 +2,6 @@ package com.neeejm.inventory.services;
 
 import com.neeejm.inventory.models.Address;
 import com.neeejm.inventory.repositories.AddressRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,8 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 class AddressServiceImplTest {
+    private final String ADDRESS_NOT_FOUND_MSG = "Address not found";
     @Mock
     private AddressRepository addressRepository;
     @Captor
@@ -63,13 +62,13 @@ class AddressServiceImplTest {
         // Given
         address.setCity("City 2");
 
-        given(addressRepository.findById(address.getId())).willReturn(Optional.of(address));
+        given(addressRepository.existsById(address.getId())).willReturn(true);
 
         // When
         underTest.update(address);
 
         // Then
-        Address a = then(addressRepository).should().save(addressArgumentCaptor.capture());
+        then(addressRepository).should().save(addressArgumentCaptor.capture());
         Address capturedAddress = addressArgumentCaptor.getValue();
         assertThat(capturedAddress).isNotNull().isEqualTo(address);
     }
@@ -78,12 +77,12 @@ class AddressServiceImplTest {
     @DisplayName("Should not update Address")
     void shouldNotUpdate() {
         // Given
-        given(addressRepository.findById(address.getId())).willReturn(Optional.empty());
+        given(addressRepository.existsById(address.getId())).willReturn(false);
 
         // When
         // Then
         assertThatThrownBy(() -> underTest.update(address))
-                .hasMessageContaining("Address not found")
+                .hasMessageContaining(ADDRESS_NOT_FOUND_MSG)
                 .isInstanceOf(EntityNotFoundException.class);
     }
     @Test
@@ -112,7 +111,7 @@ class AddressServiceImplTest {
         // When
         // Then
         assertThatThrownBy(() -> underTest.deleteById(id))
-                .hasMessageContaining("Address not found")
+                .hasMessageContaining(ADDRESS_NOT_FOUND_MSG)
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
@@ -142,7 +141,7 @@ class AddressServiceImplTest {
         // When
         // Then
         assertThatThrownBy(() -> underTest.findById(id))
-                .hasMessageContaining("Address not found")
+                .hasMessageContaining(ADDRESS_NOT_FOUND_MSG)
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
