@@ -1,45 +1,49 @@
 package com.neeejm.inventory.models;
 
+import com.neeejm.inventory.customvalidator.ValidEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "\"order\"")
 @Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class Order {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@NoArgsConstructor
+public class Order extends BaseEntity {
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String reference;
 
-    @NonNull
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NonNull
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
 
-    @NonNull
+    @NotNull(message = "Can't be null")
+    @ValidEnum(enumClass = Type.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @NonNull
+    @NotNull(message = "Can't be null")
+    @ValidEnum(enumClass = Status.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -47,14 +51,25 @@ public class Order {
     @Column(columnDefinition = "text")
     private String terms;
 
+    @URL(
+            message = "Not a valid document URL",
+            protocol = "https",
+            regexp = "(\\.pdf)$"
+    )
     private String invoiceUrl;
 
-    @NonNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull(message = "Can't be null")
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
     private Client client;
 
-    @NonNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull(message = "Can't be null")
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
     private User user;
 
     public enum Type {

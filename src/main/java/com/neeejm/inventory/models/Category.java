@@ -1,22 +1,28 @@
 package com.neeejm.inventory.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@Data@AllArgsConstructor
-@RequiredArgsConstructor
-public class Category {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category extends BaseEntity {
+    @NotBlank(message = "Can't ne blank")
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
     private Category parentCategory;
 }

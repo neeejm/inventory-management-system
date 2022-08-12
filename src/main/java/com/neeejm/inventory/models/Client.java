@@ -1,38 +1,47 @@
 package com.neeejm.inventory.models;
 
+import com.neeejm.inventory.customvalidator.ValidPhoneNumber;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
-public abstract class Client {
-    @Id
-    @GeneratedValue
-    protected UUID id;
-
+public abstract class Client extends BaseEntity {
     protected String displayName;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
+    @Email(message = "Not a valid email.")
     @Column(nullable = false)
     protected String email;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
+    @ValidPhoneNumber
     @Column(nullable = false)
     protected String primaryPhone;
 
+    @ValidPhoneNumber
     protected String secondaryPhone;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "address_id"
+
+    @NotEmpty(message = "Can't be empty")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
+    @JoinColumn(name = "address_id")
+    @Builder.Default
     private Set<Address> addresses = new HashSet<>();
 }

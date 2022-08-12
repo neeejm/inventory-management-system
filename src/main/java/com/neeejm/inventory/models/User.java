@@ -2,44 +2,51 @@ package com.neeejm.inventory.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "\"user\"")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@NoArgsConstructor
+public class User extends BaseEntity{
+    @NotBlank(message = "Can't be blank")
+    @Email(message = "Not a valid email")
     @Column(nullable = false)
     private String email;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String username;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String password;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String firstName;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @NotEmpty(message = "Can't be empty")
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST}
+    )
+    @JoinTable(
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
     private Set<Role> roles = new HashSet<>();
 }

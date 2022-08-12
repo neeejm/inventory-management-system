@@ -1,40 +1,41 @@
 package com.neeejm.inventory.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class Address {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    @NonNull
+@NoArgsConstructor
+public class Address extends BaseEntity {
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String country;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String city;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String street;
 
-    @NonNull
+    @NotBlank(message = "Can't be blank")
+    @Pattern(regexp = "^\\d{5}(?:[- ]?\\d{4})?$")
     @Column(nullable = false)
     private String zipCode;
 
     @Column(nullable = false)
     @ColumnDefault("true")
-    private Boolean isPrimary;
+    @Builder.Default
+    private Boolean isPrimary = true;
 }
