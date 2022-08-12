@@ -31,7 +31,7 @@ class EnumValidatorTest {
 
             @Override
             public Class<? extends Enum<?>> enumClass() {
-                return Order.Status.class;
+                return Order.Type.class;
             }
 
             @Override
@@ -53,9 +53,16 @@ class EnumValidatorTest {
     }
 
     @Test
+    void checkValidEnumValidator() {
+        // Then
+        assertThat(enumValidator.getValues())
+                .hasSize(2)
+                .containsExactlyInAnyOrder("PURCHASE", "SALE");
+    }
+    @Test
     void validEnumValue() {
         // Given
-        String enumValue = "ORDERED";
+        String enumValue = "SALE";
 
         // When
         boolean expected = enumValidator.isValid(enumValue, null);

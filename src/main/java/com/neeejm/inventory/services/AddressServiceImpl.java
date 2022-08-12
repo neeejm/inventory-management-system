@@ -27,7 +27,7 @@ public class AddressServiceImpl implements AddressService{
 
     @Override
     public Address update(Address address) {
-        if (!addressRepository.existsById(address.getId())) {
+        if (addressRepository.findById(address.getId()).isEmpty()) {
             throw new EntityNotFoundException(NOT_FOUND_EXCEPTION_MSG);
         }
         return addressRepository.save(address);
