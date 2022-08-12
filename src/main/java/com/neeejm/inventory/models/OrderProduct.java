@@ -5,12 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -30,11 +30,12 @@ public class OrderProduct {
     @MapsId("productId")
     private Product product;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
+    @Min(value = 1, message = "Can't be less than 1")
     @Column(nullable = false)
     private Integer quantity;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.DATE)

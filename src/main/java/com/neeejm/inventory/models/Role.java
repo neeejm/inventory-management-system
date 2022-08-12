@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class Role implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = RoleName.class)
     @Column(nullable = false)
     private RoleName name;

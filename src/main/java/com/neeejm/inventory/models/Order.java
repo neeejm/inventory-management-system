@@ -26,23 +26,23 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     private String reference;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = Type.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = Status.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
     private Set<String> values;
 
+    @Override
     public void initialize(ValidEnum constraintAnnotation) {
         values = Stream.of(constraintAnnotation.enumClass().getEnumConstants())
             .map(Enum::name)

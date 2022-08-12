@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class Privilege implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = PrivilegeName.class)
     @Column(nullable = false)
     private PrivilegeName name;
