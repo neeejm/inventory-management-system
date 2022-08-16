@@ -9,6 +9,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/hello").setViewName("index");
+        registry.addViewController("/").setViewName("index");
     }
 }

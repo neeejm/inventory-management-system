@@ -1,10 +1,8 @@
 package com.neeejm.inventory.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,9 +10,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,4 +43,17 @@ public class OrderProduct {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Builder.Default
     private Date orderDate = new Date();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        OrderProduct that = (OrderProduct) o;
+        return orderProductId != null && Objects.equals(orderProductId, that.orderProductId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderProductId);
+    }
 }

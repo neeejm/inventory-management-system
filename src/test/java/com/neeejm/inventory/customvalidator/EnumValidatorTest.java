@@ -7,13 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.validation.Payload;
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class EnumValidatorTest {
