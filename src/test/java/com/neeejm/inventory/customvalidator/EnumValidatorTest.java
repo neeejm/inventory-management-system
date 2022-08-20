@@ -1,16 +1,16 @@
 package com.neeejm.inventory.customvalidator;
 
-import com.neeejm.inventory.models.Order;
-import lombok.extern.slf4j.Slf4j;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.annotation.Annotation;
+
+import javax.validation.Payload;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.validation.Payload;
-import java.lang.annotation.Annotation;
+import com.neeejm.inventory.models.Order;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@Slf4j
 class EnumValidatorTest {
     private static final EnumValidator enumValidator = new EnumValidator();
     private static ValidEnum validEnum;
