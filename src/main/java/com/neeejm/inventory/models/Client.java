@@ -34,7 +34,7 @@ public abstract class Client extends BaseEntity {
     @Column(nullable = false)
     protected String primaryPhone;
 
-    @ValidPhoneNumber
+    @ValidPhoneNumber(nullable = true)
     protected String secondaryPhone;
 
     @OneToMany(
