@@ -15,6 +15,7 @@ target/
 
 ### Gradle ###
 **/bin/
+bin/
 .gradle
 **/build/
 !src/**/build/
