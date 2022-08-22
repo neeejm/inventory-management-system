@@ -1,21 +1,26 @@
 package com.neeejm.inventory.models;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.Hibernate;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
-@Getter
-@Setter
-@ToString
+@Data
 @SuperBuilder
 @NoArgsConstructor
 public abstract class BaseEntity implements Serializable {
@@ -35,17 +40,4 @@ public abstract class BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
     private Date modifiedAt = new Date();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BaseEntity that = (BaseEntity) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

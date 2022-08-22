@@ -58,14 +58,12 @@ public class Order extends BaseEntity {
     )
     private String invoiceUrl;
 
-    @NotNull(message = "Can't be null")
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
     )
     private Client client;
 
-    @NotNull(message = "Can't be null")
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false

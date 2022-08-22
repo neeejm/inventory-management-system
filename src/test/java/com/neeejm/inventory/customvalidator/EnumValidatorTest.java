@@ -9,7 +9,7 @@ import javax.validation.Payload;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.neeejm.inventory.models.Order;
+import com.neeejm.inventory.models.Role;
 
 class EnumValidatorTest {
     private static final EnumValidator enumValidator = new EnumValidator();
@@ -26,7 +26,7 @@ class EnumValidatorTest {
 
             @Override
             public Class<? extends Enum<?>> enumClass() {
-                return Order.Type.class;
+                return Role.RoleName.class;
             }
 
             @Override
@@ -51,13 +51,14 @@ class EnumValidatorTest {
     void checkValidEnumValidator() {
         // Then
         assertThat(enumValidator.getValues())
-                .hasSize(2)
-                .containsExactlyInAnyOrder("PURCHASE", "SALE");
+                .hasSize(3)
+                // .containsExactlyInAnyOrder("PURCHASE", "SALE");
+                .contains("ROLE_SALES", "ROLE_PURCHASE");
     }
     @Test
     void validEnumValue() {
         // Given
-        String enumValue = "SALE";
+        String enumValue = "ROLE_SALES";
 
         // When
         boolean expected = enumValidator.isValid(enumValue, null);

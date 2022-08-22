@@ -1,15 +1,16 @@
 package com.neeejm.inventory.customvalidator;
 
-import lombok.Data;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+import lombok.Getter;
+
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
+    @Getter
     private Set<String> values;
 
     @Override

@@ -37,8 +37,6 @@ public abstract class Client extends BaseEntity {
     @ValidPhoneNumber
     protected String secondaryPhone;
 
-
-    @NotEmpty(message = "Can't be empty")
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,

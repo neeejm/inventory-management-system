@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = EnumValidator.class)
-@Target(ElementType.FIELD)
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEnum {
     Class<? extends Enum<?>> enumClass();

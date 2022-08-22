@@ -40,7 +40,7 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String lastName;
 
-    @NotEmpty(message = "Can't be empty")
+    // @NotEmpty(message = "Can't be empty")
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST}

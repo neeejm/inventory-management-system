@@ -1,18 +1,31 @@
 package com.neeejm.inventory.models;
 
 
-import com.neeejm.inventory.customvalidator.ValidEnum;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.Hibernate;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import org.hibernate.Hibernate;
+
+import com.neeejm.inventory.customvalidator.ValidEnum;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -26,12 +39,12 @@ public class Role implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @NotNull(message = "Can't be null")
+    // @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = RoleName.class)
     @Column(nullable = false)
-    private RoleName name;
+    private String name;
 
-    @NotEmpty(message = "Can't be empty")
+    // @NotEmpty(message = "Can't be empty")
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST}

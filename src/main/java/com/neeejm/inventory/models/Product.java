@@ -55,7 +55,6 @@ public class Product extends BaseEntity {
     )
     private String imageUrl;
 
-    @NotNull(message = "Can't be null")
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
