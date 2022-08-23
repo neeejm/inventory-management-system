@@ -1,15 +1,12 @@
 package com.neeejm.inventory.configs;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.neeejm.inventory.models.Privilege;
 import com.neeejm.inventory.models.Role;
@@ -32,22 +29,6 @@ public class AppConfig {
         loadDefaultRoles();
     }
 
-    private void loadDefaultRoles() {
-        if (roleRepository.findAll().size() == 0) {
-            Arrays.stream(Role.RoleName.values()).forEach(
-                    r -> {
-                        roleRepository.save(
-                                Role.builder()
-                                        .name(r.toString())
-                                        .build());
-                        log.info("SEED_ROLES ==> " + r.toString());
-                    });
-            log.info("Roles seeding done");
-        } else {
-            log.info("Roles seeding not required");
-        }
-    }
-
     private void loadPrivileges() {
         if (privilegeRepository.findAll().size() == 0) {
             Arrays.stream(Privilege.PrivilegeName.values()).forEach(
@@ -62,5 +43,70 @@ public class AppConfig {
         } else {
             log.info("Privileges seeding not required");
         }
+    }
+
+    private void loadDefaultRoles() {
+        if (roleRepository.findAll().size() == 0) {
+            saveAdminRole();
+            savePurchasesRole();
+            saveSalesRole();
+            log.info("Roles seeding done");
+        } else {
+            log.info("Roles seeding not required");
+        }
+    }
+
+    private void saveAdminRole() {
+        Role adminRole = Role.builder()
+                .name(Role.RoleName.ROLE_ADMIN.toString())
+                .privileges(Set.of(
+                        privilegeRepository.findByName(
+                            Privilege.PrivilegeName.OP_ALL.toString()
+                        ).get()
+                ))
+                .build();
+        roleRepository.save(adminRole);
+    }
+
+    private void saveSalesRole() {
+        Role salesManagerRole = Role.builder()
+                .name(Role.RoleName.ROLE_SALES_MANAGER.toString())
+                .privileges(Set.of(
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_CREATE_SALES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_DELETE_SALES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_READ_SALES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_UPDATE_SALES.toString()
+                    ).get()
+                ))
+                .build();
+        roleRepository.save(salesManagerRole);
+    }
+
+    private void savePurchasesRole() {
+        Role purchasesManagerRole = Role.builder()
+                .name(Role.RoleName.ROLE_PURCHASES_MANAGER.toString())
+                .privileges(Set.of(
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_CREATE_PURCHASES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_DELETE_PURCHASES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_READ_PURCHASES.toString()
+                    ).get(),
+                    privilegeRepository.findByName(
+                        Privilege.PrivilegeName.OP_UPDATE_PURCHASES.toString()
+                    ).get()
+                ))
+                .build();
+        roleRepository.save(purchasesManagerRole);
     }
 }

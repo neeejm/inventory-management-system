@@ -2,11 +2,11 @@ package com.neeejm.inventory.models;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,11 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.Hibernate;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,8 +40,7 @@ public class Role implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @NotEmpty(message = "Can't be empty")
-    // @ValidEnum(enumClass = RoleName.class)
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     private String name;
 
@@ -50,7 +51,8 @@ public class Role implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "privilege_id") }
     )
     @ToString.Exclude
-    private Set<Privilege> privileges;
+    @Builder.Default
+    private Set<Privilege> privileges = new HashSet<>();
 
     public enum RoleName {
         ROLE_SALES_MANAGER,

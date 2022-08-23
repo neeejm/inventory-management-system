@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -32,11 +33,13 @@ public abstract class BaseEntity implements Serializable {
     private Long version;
 
     @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
     private Date createdAt = new Date();
 
     @LastModifiedDate
+    @Column(name = "modified_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
     private Date modifiedAt = new Date();
