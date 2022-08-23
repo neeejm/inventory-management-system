@@ -53,12 +53,12 @@ class EnumValidatorTest {
         assertThat(enumValidator.getValues())
                 .hasSize(3)
                 // .containsExactlyInAnyOrder("PURCHASE", "SALE");
-                .contains("ROLE_SALES", "ROLE_PURCHASE");
+                .contains("ROLE_SALES_MANAGER", "ROLE_ADMIN");
     }
     @Test
     void validEnumValue() {
         // Given
-        String enumValue = "ROLE_SALES";
+        String enumValue = "ROLE_ADMIN";
 
         // When
         boolean expected = enumValidator.isValid(enumValue, null);

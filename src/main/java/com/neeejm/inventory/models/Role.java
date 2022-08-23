@@ -15,10 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.Hibernate;
-
-import com.neeejm.inventory.customvalidator.ValidEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,15 +38,13 @@ public class Role implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    // @NotNull(message = "Can't be null")
-    @ValidEnum(enumClass = RoleName.class)
+    @NotEmpty(message = "Can't be empty")
+    // @ValidEnum(enumClass = RoleName.class)
     @Column(nullable = false)
     private String name;
 
-    // @NotEmpty(message = "Can't be empty")
     @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST}
+            fetch = FetchType.LAZY
     )
     @JoinTable(
             inverseJoinColumns = { @JoinColumn(name = "privilege_id") }
@@ -55,9 +52,9 @@ public class Role implements Serializable {
     @ToString.Exclude
     private Set<Privilege> privileges;
 
-    public enum  RoleName {
-        ROLE_SALES,
-        ROLE_PURCHASE,
+    public enum RoleName {
+        ROLE_SALES_MANAGER,
+        ROLE_PURCHASES_MANAGER,
         ROLE_ADMIN
     }
 

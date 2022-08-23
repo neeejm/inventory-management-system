@@ -17,3 +17,7 @@ spring:
 
 server:
   port: '${SERVER_PORT:8089}'
+
+logging:
+  level:
+    root: 'DEBUG'
