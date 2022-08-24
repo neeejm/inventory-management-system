@@ -42,7 +42,7 @@ public abstract class Client extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "client_id")
     @Builder.Default
     private Set<Address> addresses = new HashSet<>();
 

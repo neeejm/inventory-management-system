@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -19,6 +20,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stock extends BaseEntity{
+
+	@NotBlank(message = "Can't be blank")
+	private String name;
+	
     @NotNull(message = "Can't be null")
     @OneToOne(
             fetch = FetchType.EAGER,

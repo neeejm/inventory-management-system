@@ -11,7 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "\"order\"")
@@ -50,6 +52,14 @@ public class Order extends BaseEntity {
 
     @Column(columnDefinition = "text")
     private String terms;
+    
+    @OneToMany(
+    		fetch = FetchType.EAGER,
+    		cascade = CascadeType.ALL
+    	)
+    @JoinColumn(name = "order_id")
+    @Builder.Default
+    private Set<LineItem> lineItems = new HashSet<>();
 
     @URL(
             message = "Not a valid document URL",
