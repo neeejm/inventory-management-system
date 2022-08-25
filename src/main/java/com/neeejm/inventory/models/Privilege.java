@@ -11,7 +11,7 @@ import javax.persistence.Id;
 
 import org.hibernate.Hibernate;
 
-import com.neeejm.inventory.customvalidator.ValidEnum;
+import com.neeejm.inventory.customvalidator.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

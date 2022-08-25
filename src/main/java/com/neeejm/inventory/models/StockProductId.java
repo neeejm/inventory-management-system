@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Embeddable
+// @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

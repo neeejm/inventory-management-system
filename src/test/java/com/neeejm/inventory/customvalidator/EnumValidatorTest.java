@@ -9,6 +9,8 @@ import javax.validation.Payload;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.neeejm.inventory.customvalidator.annotations.ValidEnum;
+import com.neeejm.inventory.customvalidator.validators.EnumValidator;
 import com.neeejm.inventory.models.Role;
 
 class EnumValidatorTest {

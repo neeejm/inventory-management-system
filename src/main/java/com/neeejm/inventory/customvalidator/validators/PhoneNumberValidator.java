@@ -1,4 +1,4 @@
-package com.neeejm.inventory.customvalidator;
+package com.neeejm.inventory.customvalidator.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -6,6 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber.CountryCodeSource;
+import com.neeejm.inventory.customvalidator.annotations.ValidPhoneNumber;
 
 import lombok.Setter;
 

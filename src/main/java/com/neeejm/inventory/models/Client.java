@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.Hibernate;
 
-import com.neeejm.inventory.customvalidator.ValidPhoneNumber;
+import com.neeejm.inventory.customvalidator.annotations.ValidPhoneNumber;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

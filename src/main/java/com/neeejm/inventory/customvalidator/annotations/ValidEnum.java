@@ -1,7 +1,10 @@
-package com.neeejm.inventory.customvalidator;
+package com.neeejm.inventory.customvalidator.annotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import com.neeejm.inventory.customvalidator.validators.EnumValidator;
+
 import java.lang.annotation.*;
 
 @Documented

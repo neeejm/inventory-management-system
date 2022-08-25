@@ -1,15 +1,29 @@
 package com.neeejm.inventory.models;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.Hibernate;
+import java.util.Objects;
+import java.util.UUID;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+
+import org.checkerframework.checker.units.qual.C;
+import org.hibernate.Hibernate;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@IdClass(StockProductId.class)
 @Getter
 @Setter
 @ToString
@@ -17,12 +31,15 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockProduct {
-    @EmbeddedId
-    private StockProductId id;
+    // @EmbeddedId
+    // private StockProductId id;
+    @Id
+    @Column(name = "stock_id")
+    private UUID stockId;
 
-    @ManyToOne
-    @MapsId("stockId")
-    private Stock stock;
+    @Id
+    @Column(name = "product_id")
+    private UUID productId;
 
     @ManyToOne
     @MapsId("productId")
@@ -38,11 +55,15 @@ public class StockProduct {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         StockProduct that = (StockProduct) o;
-        return id != null && Objects.equals(id, that.id);
+        return stockId != null && productId != null
+                && Objects.equals(stockId, that.stockId)
+                && Objects.equals(productId, that.productId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(
+            stockId.hashCode() * productId.hashCode()
+        );
     }
 }

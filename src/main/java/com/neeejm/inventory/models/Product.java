@@ -5,6 +5,8 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
 
+import com.neeejm.inventory.customvalidator.annotations.ValidSubcategory;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -59,7 +61,8 @@ public class Product extends BaseEntity {
             fetch = FetchType.EAGER,
             optional = false
     )
-    private Category subCategory;
+    @ValidSubcategory
+    private Category subcategory;
 
     @Override
     public boolean equals(Object o) {
