@@ -40,7 +40,7 @@ public class Role implements Serializable {
     private UUID id;
 
     @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(

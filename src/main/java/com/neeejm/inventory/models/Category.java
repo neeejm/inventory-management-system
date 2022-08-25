@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
+import com.neeejm.inventory.customvalidator.ValidEnum;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -20,11 +22,21 @@ public class Category extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @NotBlank(message = "Can(t be blank")
+    @Column(nullable = false)
+    @ValidEnum(enumClass = CategoryType.class)
+    private String type;
+
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
     private Category parentCategory;
+
+    public enum CategoryType {
+        PARENT_CATEGORY,
+        SUBCATEGORY
+    }
 
     @Override
     public boolean equals(Object o) {

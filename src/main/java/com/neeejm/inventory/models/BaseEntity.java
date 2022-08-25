@@ -1,5 +1,6 @@
 package com.neeejm.inventory.models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public abstract class BaseEntity implements Serializable {
+    @Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id

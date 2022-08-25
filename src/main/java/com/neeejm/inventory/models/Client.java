@@ -40,7 +40,7 @@ public abstract class Client extends BaseEntity {
 
     @NotBlank(message = "Can't be blank")
     @Email(message = "Not a valid email.")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     protected String email;
 
     @NotBlank(message = "Can't be blank")

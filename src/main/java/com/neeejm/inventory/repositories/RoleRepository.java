@@ -12,6 +12,6 @@ import com.neeejm.inventory.models.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
-    @RestResource(path = "by")
-    Optional<Role> findByName(@Param("name") String name);
+    @RestResource(path = "name")
+    Optional<Role> findByNameIgnoreCase(@Param("name") String name);
 }

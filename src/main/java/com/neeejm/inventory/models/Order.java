@@ -25,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Order extends BaseEntity {
     @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String reference;
 
     @NotNull(message = "Can't be null")
@@ -66,6 +66,7 @@ public class Order extends BaseEntity {
             protocol = "https",
             regexp = "(\\.pdf)$"
     )
+    @Column(unique = true)
     private String invoiceUrl;
 
     @ManyToOne(

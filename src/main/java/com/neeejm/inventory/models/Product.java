@@ -28,7 +28,7 @@ public class Product extends BaseEntity {
     private String name;
 
     @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String reference;
 
     @NotNull(message = "Can't be null")

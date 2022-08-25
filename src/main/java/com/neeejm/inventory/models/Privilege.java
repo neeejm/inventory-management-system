@@ -33,7 +33,7 @@ public class Privilege implements Serializable {
     private UUID id;
 
     @ValidEnum(enumClass = PrivilegeName.class)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     public enum PrivilegeName {

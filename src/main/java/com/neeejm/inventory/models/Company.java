@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Company extends Client{
     @NotBlank(message = "Can't be blank")
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Override

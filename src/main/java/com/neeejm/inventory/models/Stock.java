@@ -5,6 +5,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class Stock extends BaseEntity{
 
 	@NotBlank(message = "Can't be blank")
+    @Column(unique = true)
 	private String name;
 	
     @NotNull(message = "Can't be null")

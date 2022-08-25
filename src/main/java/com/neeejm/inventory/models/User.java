@@ -33,11 +33,11 @@ import lombok.ToString;
 public class User extends BaseEntity{
     @NotBlank(message = "Can't be blank")
     @Email(message = "Not a valid email")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotBlank(message = "Can't be blank")
@@ -52,7 +52,6 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String lastName;
 
-    // @NotEmpty(message = "Can't be empty")
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST}
