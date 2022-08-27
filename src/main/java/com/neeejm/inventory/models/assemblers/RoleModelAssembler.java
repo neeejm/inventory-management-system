@@ -1,14 +1,8 @@
 package com.neeejm.inventory.models.assemblers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.xml.crypto.Data;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
@@ -32,23 +26,19 @@ public class RoleModelAssembler
 
     @Override
     public RoleModel toModel(Role role) {
-        final String BASE_URL = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .build()
-                .toUriString();
 
         RoleModel roleModel = createRessource(role);
 
         roleModel.add(Link.of(
-                BASE_URL + DataRestConfig.BASE_PATH + "roles/{role_id}")
+                getBaseURL() + DataRestConfig.BASE_PATH + "roles/{role_id}")
                 .withSelfRel()
                 .expand(role.getId()));
         roleModel.add(Link.of(
-                BASE_URL + DataRestConfig.BASE_PATH + "roles/{role_id}")
+                getBaseURL() + DataRestConfig.BASE_PATH + "roles/{role_id}")
                 .withRel("role")
                 .expand(role.getId()));
         roleModel.add(Link.of(
-                BASE_URL + DataRestConfig.BASE_PATH + "roles/{role_id}/privileges")
+                getBaseURL() + DataRestConfig.BASE_PATH + "roles/{role_id}/privileges")
                 .withRel("privileges")
                 .expand(role.getId()));
 
@@ -71,6 +61,14 @@ public class RoleModelAssembler
         return privileges.stream().map(privilege -> PrivilegeModel.builder()
                 .id(privilege.getId())
                 .name(privilege.getName())
-                .build()).collect(Collectors.toSet());
+                .build())
+                .collect(Collectors.toSet());
+    }
+
+    private String getBaseURL() {
+        return ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .build()
+                .toUriString();
     }
 }

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.neeejm.inventory.entities.Privilege;
 import com.neeejm.inventory.entities.Role;
+import com.neeejm.inventory.models.PrivilegeModel;
 import com.neeejm.inventory.models.RoleModel;
+import com.neeejm.inventory.models.assemblers.PrivilegeModelAssembler;
 import com.neeejm.inventory.models.assemblers.RoleModelAssembler;
 import com.neeejm.inventory.repositories.PrivilegeRepository;
 import com.neeejm.inventory.repositories.RoleRepository;
@@ -22,13 +25,13 @@ import com.neeejm.inventory.repositories.RoleRepository;
 public class RoleContoller {
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;
-    private RoleModelAssembler roleAssembler;
+    private PrivilegeModelAssembler privilegeAssembler;
 
     @Autowired
     public RoleContoller(RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
         this.roleRepository = roleRepository;
         this.privilegeRepository = privilegeRepository;
-        this.roleAssembler = new RoleModelAssembler();
+        this.privilegeAssembler = new PrivilegeModelAssembler();
     }
 
     @RequestMapping(
@@ -36,7 +39,7 @@ public class RoleContoller {
         method = RequestMethod.PATCH,
         produces = "application/hal+json"
     )
-    public ResponseEntity<RoleModel> appendPrivilege(
+    public ResponseEntity<CollectionModel<PrivilegeModel>> appendPrivilege(
             @PathVariable("role_id") UUID roleId,
             @PathVariable("privilege_id") UUID privilegeId) {
 
@@ -50,7 +53,8 @@ public class RoleContoller {
         roleToPatch.appendPrivilege(privilege.get());
 
         return ResponseEntity.ok(
-                roleAssembler.toModel(
-                        roleRepository.save(roleToPatch)));
+                privilegeAssembler.toCollectionModel(
+                        roleRepository.save(roleToPatch)
+                        .getPrivileges()));
     }
 }
