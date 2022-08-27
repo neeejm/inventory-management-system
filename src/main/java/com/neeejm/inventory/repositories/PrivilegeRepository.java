@@ -8,12 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.neeejm.inventory.models.Privilege;
+import com.neeejm.inventory.entities.Privilege;
 
 @Repository
 public interface PrivilegeRepository extends JpaRepository<Privilege, UUID> {
     @RestResource(path = "name")
-    Optional<Privilege> findByNameIgnoreCase(@Param("name") String name);
+    Optional<Privilege> findByNameIgnoreCase(@Param("value") String name);
 
     default Optional<Privilege> findByName(String name) {
         return findByNameIgnoreCase(name);

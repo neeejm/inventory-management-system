@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

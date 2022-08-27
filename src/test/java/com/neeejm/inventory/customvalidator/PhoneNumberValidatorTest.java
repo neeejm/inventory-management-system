@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.neeejm.inventory.customvalidator.validators.PhoneNumberValidator;
+import com.neeejm.inventory.validators.PhoneNumberValidator;
 
 class PhoneNumberValidatorTest {
     private final PhoneNumberValidator phoneNumberValidator = new PhoneNumberValidator();

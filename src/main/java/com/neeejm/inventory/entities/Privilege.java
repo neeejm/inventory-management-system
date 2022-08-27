@@ -1,26 +1,19 @@
-package com.neeejm.inventory.models;
-
+package com.neeejm.inventory.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.Hibernate;
 
+import com.neeejm.inventory.validators.annotations.ValidEnum;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,37 +27,40 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role implements Serializable {
+public class Privilege implements Serializable {
     @Id
     @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "Can't be blank")
+    @ValidEnum(enumClass = PrivilegeName.class)
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY
-    )
-    @JoinTable(
-            inverseJoinColumns = { @JoinColumn(name = "privilege_id") }
-    )
-    @ToString.Exclude
-    @Builder.Default
-    private Set<Privilege> privileges = new HashSet<>();
+    public enum PrivilegeName {
+        OP_ALL,
 
-    public enum RoleName {
-        ROLE_SALES_MANAGER,
-        ROLE_PURCHASES_MANAGER,
-        ROLE_ADMIN
+        OP_CREATE_SALES,
+        OP_READ_SALES,
+        OP_UPDATE_SALES,
+        OP_DELETE_SALES,
+
+        OP_CREATE_PURCHASES,
+        OP_READ_PURCHASES,
+        OP_UPDATE_PURCHASES,
+        OP_DELETE_PURCHASES,
+
+        OP_CREATE_PRODUCTS,
+        OP_READ_PRODUCTS,
+        OP_UPDATE_PRODUCTS,
+        OP_DELETE_PRODUCTS,
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
-        return id != null && Objects.equals(id, role.id);
+        Privilege privilege = (Privilege) o;
+        return id != null && Objects.equals(id, privilege.id);
     }
 
     @Override

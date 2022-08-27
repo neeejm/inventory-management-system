@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;

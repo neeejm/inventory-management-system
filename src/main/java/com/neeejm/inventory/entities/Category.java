@@ -1,10 +1,10 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import com.neeejm.inventory.customvalidator.annotations.ValidEnum;
+import com.neeejm.inventory.validators.annotations.ValidEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

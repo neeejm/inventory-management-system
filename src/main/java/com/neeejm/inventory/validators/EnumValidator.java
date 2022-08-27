@@ -1,4 +1,4 @@
-package com.neeejm.inventory.customvalidator.validators;
+package com.neeejm.inventory.validators;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.neeejm.inventory.customvalidator.annotations.ValidEnum;
+import com.neeejm.inventory.validators.annotations.ValidEnum;
 
 import lombok.Getter;
 

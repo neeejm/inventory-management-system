@@ -1,9 +1,9 @@
-package com.neeejm.inventory.customvalidator.annotations;
+package com.neeejm.inventory.validators.annotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.neeejm.inventory.customvalidator.validators.EnumValidator;
+import com.neeejm.inventory.validators.EnumValidator;
 
 import java.lang.annotation.*;
 

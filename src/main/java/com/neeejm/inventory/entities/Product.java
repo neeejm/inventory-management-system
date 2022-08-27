@@ -1,11 +1,11 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
 
-import com.neeejm.inventory.customvalidator.annotations.ValidSubcategory;
+import com.neeejm.inventory.validators.annotations.ValidSubcategory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

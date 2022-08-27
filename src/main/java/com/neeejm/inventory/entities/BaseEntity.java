@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import java.io.Serial;
 import java.io.Serializable;

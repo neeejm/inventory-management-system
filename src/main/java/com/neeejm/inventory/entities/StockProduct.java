@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -12,7 +12,6 @@ import javax.persistence.MapsId;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.checkerframework.checker.units.qual.C;
 import org.hibernate.Hibernate;
 
 import lombok.AllArgsConstructor;
@@ -40,6 +39,10 @@ public class StockProduct {
     @Id
     @Column(name = "product_id")
     private UUID productId;
+
+    @ManyToOne
+    @MapsId("stockId")
+    private Stock stock;
 
     @ManyToOne
     @MapsId("productId")

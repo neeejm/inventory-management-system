@@ -1,5 +1,8 @@
 package com.neeejm.inventory.configs;
 
+import javax.persistence.EntityManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -7,11 +10,16 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
-import com.neeejm.inventory.models.BaseEntity;
-import com.neeejm.inventory.models.Privilege;
+import com.neeejm.inventory.entities.BaseEntity;
+import com.neeejm.inventory.entities.Privilege;
 
 @Configuration
 public class DataRestConfig implements RepositoryRestConfigurer {
+
+    public static final String BASE_PATH = "/api/v1/";
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
@@ -22,7 +30,11 @@ public class DataRestConfig implements RepositoryRestConfigurer {
             public void configureRepositoryRestConfiguration(
                     RepositoryRestConfiguration config,
                     CorsRegistry cors) {
-                config.setBasePath("/api/v1");
+                config.setBasePath(BASE_PATH);
+
+                entityManager.getMetamodel().getEntities().forEach(entity -> {
+                    config.exposeIdsFor(entity.getJavaType());
+                });
 
                 config.getExposureConfiguration()
                         .forDomainType(BaseEntity.class)

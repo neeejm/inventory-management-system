@@ -1,9 +1,9 @@
-package com.neeejm.inventory.customvalidator.annotations;
+package com.neeejm.inventory.validators.annotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.neeejm.inventory.customvalidator.validators.PhoneNumberValidator;
+import com.neeejm.inventory.validators.PhoneNumberValidator;
 
 import java.lang.annotation.*;
 

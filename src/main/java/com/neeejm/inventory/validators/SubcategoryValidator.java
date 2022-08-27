@@ -1,10 +1,10 @@
-package com.neeejm.inventory.customvalidator.validators;
+package com.neeejm.inventory.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.neeejm.inventory.customvalidator.annotations.ValidSubcategory;
-import com.neeejm.inventory.models.Category;
+import com.neeejm.inventory.entities.Category;
+import com.neeejm.inventory.validators.annotations.ValidSubcategory;
 
 public class SubcategoryValidator implements ConstraintValidator<ValidSubcategory, Category> {
 

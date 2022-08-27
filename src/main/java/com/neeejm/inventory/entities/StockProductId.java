@@ -1,13 +1,12 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Embeddable;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.UUID;
 
 // @Embeddable
 @Data
@@ -18,5 +17,6 @@ public class StockProductId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private UUID stockId;
+
     private UUID productId;
 }

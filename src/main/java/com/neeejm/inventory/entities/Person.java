@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.entities;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,17 +16,21 @@ import java.util.Objects;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company extends Client{
+public class Person extends Client {
     @NotBlank(message = "Can't be blank")
-    @Column(unique = true, nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private String firstName;
+
+    @NotBlank(message = "Can't be blank")
+    @Column(nullable = false)
+    private String lastName;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Company company = (Company) o;
-        return getId() != null && Objects.equals(getId(), company.getId());
+        Person person = (Person) o;
+        return getId() != null && Objects.equals(getId(), person.getId());
     }
 
     @Override

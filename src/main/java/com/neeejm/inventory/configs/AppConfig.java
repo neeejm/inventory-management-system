@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
-import com.neeejm.inventory.models.Privilege;
-import com.neeejm.inventory.models.Role;
+import com.neeejm.inventory.entities.Privilege;
+import com.neeejm.inventory.entities.Role;
 import com.neeejm.inventory.repositories.PrivilegeRepository;
 import com.neeejm.inventory.repositories.RoleRepository;
 
@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 public class AppConfig {
+
     @Autowired
     private PrivilegeRepository privilegeRepository;
     @Autowired

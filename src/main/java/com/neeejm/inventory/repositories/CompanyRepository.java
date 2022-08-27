@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.neeejm.inventory.models.Company;
+import com.neeejm.inventory.entities.Company;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, UUID> {

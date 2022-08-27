@@ -1,4 +1,4 @@
-package com.neeejm.inventory.customvalidator.annotations;
+package com.neeejm.inventory.validators.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.neeejm.inventory.customvalidator.validators.SubcategoryValidator;
+import com.neeejm.inventory.validators.SubcategoryValidator;
 
 @Documented
 @Constraint(validatedBy = SubcategoryValidator.class)

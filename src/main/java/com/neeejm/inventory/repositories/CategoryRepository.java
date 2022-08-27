@@ -8,16 +8,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.neeejm.inventory.models.Category;
+import com.neeejm.inventory.entities.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     @RestResource(path = "type")
-    Set<Category> findByTypeIgnoreCase(@Param("type") String type);
+    Set<Category> findByTypeIgnoreCase(@Param("value") String type);
 
-    @RestResource(path = "name")
-    Set<Category> findByNameContaining(@Param("name") String name);
+    @RestResource(path = "nameContaining")
+    Set<Category> findByNameContaining(@Param("value") String name);
 
     @RestResource(path = "subcategories")
-    Set<Category> findByParentCategoryName(@Param("parent") String name);
+    Set<Category> findByParentCategoryName(@Param("value") String name);
 }
