@@ -21,7 +21,7 @@ import com.neeejm.inventory.models.assemblers.RoleModelAssembler;
 import com.neeejm.inventory.repositories.PrivilegeRepository;
 import com.neeejm.inventory.repositories.RoleRepository;
 
-@BasePathAwareController
+// @BasePathAwareController
 public class RoleContoller {
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;

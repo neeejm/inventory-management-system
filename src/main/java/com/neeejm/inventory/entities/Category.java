@@ -1,14 +1,29 @@
 package com.neeejm.inventory.entities;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+
 import org.hibernate.Hibernate;
 
 import com.neeejm.inventory.validators.annotations.ValidEnum;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -28,10 +43,18 @@ public class Category extends BaseEntity {
     private String type;
 
     @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
+        fetch = FetchType.EAGER
     )
+    @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
+
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "parentCategory"
+    )
+    @Builder.Default
+    private Set<Category> subcategories = new HashSet<>();
 
     public enum CategoryType {
         PARENT_CATEGORY,

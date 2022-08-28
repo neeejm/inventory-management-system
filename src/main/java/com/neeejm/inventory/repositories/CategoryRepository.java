@@ -1,7 +1,6 @@
 package com.neeejm.inventory.repositories;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
@@ -17,9 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
     @RestResource(path = "type")
     List<Category> findByTypeIgnoreCase(@Param("value") String type, Pageable pageable);
 
-    @RestResource(path = "nameContaining")
-    List<Category> findByNameContaining(@Param("value") String name, Pageable pageable);
-
-    @RestResource(path = "subcategories")
-    List<Category> findByParentCategoryName(@Param("parent_name") String name, Pageable pageable);
+    @RestResource(path = "name-containing")
+    List<Category> findByNameIgnoreCaseContaining(@Param("value") String name, Pageable pageable);
 }
