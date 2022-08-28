@@ -16,6 +16,8 @@ import javax.persistence.Version;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,12 +38,14 @@ public abstract class BaseEntity implements Serializable {
     @Version
     private Long version;
 
+    @JsonIgnore
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
     private Date createdAt = new Date();
 
+    @JsonIgnore
     @LastModifiedDate
     @Column(name = "modified_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
