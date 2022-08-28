@@ -16,8 +16,6 @@ import com.neeejm.inventory.entities.Privilege;
 @Configuration
 public class DataRestConfig implements RepositoryRestConfigurer {
 
-    public static final String BASE_PATH = "/api/v1/";
-
     @Autowired
     private EntityManager entityManager;
 
@@ -30,7 +28,6 @@ public class DataRestConfig implements RepositoryRestConfigurer {
             public void configureRepositoryRestConfiguration(
                     RepositoryRestConfiguration config,
                     CorsRegistry cors) {
-                config.setBasePath(BASE_PATH);
 
                 entityManager.getMetamodel().getEntities().forEach(entity -> {
                     config.exposeIdsFor(entity.getJavaType());

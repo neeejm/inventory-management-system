@@ -1,12 +1,15 @@
 spring:
   config:
     import: 'optional:file:.local.env.properties'
+
   banner:
     location: 'banner.txt'
+
   datasource:
     url: 'jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}'
     username: '${DB_USERNAME}'
     password: '${DB_PASSWORD}'
+
   jpa:
     hibernate:
       ddl-auto: 'update'
@@ -14,6 +17,12 @@ spring:
     properties:
       hibernate:
         '[format_sql]': 'true'
+
+  data:
+    rest:
+      base-path: /api/v1
+      default-page-size: 10
+
 
 server:
   port: '${SERVER_PORT:8089}'

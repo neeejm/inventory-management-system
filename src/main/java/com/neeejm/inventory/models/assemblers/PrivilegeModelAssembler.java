@@ -1,12 +1,12 @@
 package com.neeejm.inventory.models.assemblers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.neeejm.inventory.configs.DataRestConfig;
 import com.neeejm.inventory.controllers.RoleContoller;
 import com.neeejm.inventory.entities.Privilege;
 import com.neeejm.inventory.models.PrivilegeModel;
@@ -14,6 +14,9 @@ import com.neeejm.inventory.models.PrivilegeModel;
 @Component
 public class PrivilegeModelAssembler
         extends RepresentationModelAssemblerSupport<Privilege, PrivilegeModel> {
+
+    @Value("${spring.data.rest.base-path}")
+    private String basePath;
 
     public PrivilegeModelAssembler() {
         super(RoleContoller.class, PrivilegeModel.class);
@@ -25,11 +28,11 @@ public class PrivilegeModelAssembler
         PrivilegeModel privilegeModel = createRessource(privilege);
 
         privilegeModel.add(Link.of(
-                getBaseURL() + DataRestConfig.BASE_PATH + "privileges/{privilege_id}")
+                getBaseURL() + basePath + "privileges/{privilege_id}")
                 .withSelfRel()
                 .expand(privilege.getId()));
         privilegeModel.add(Link.of(
-                getBaseURL() + DataRestConfig.BASE_PATH + "roles/{privilege_id}")
+                getBaseURL() + basePath + "privileges/{privilege_id}")
                 .withRel("privilege")
                 .expand(privilege.getId()));
 
