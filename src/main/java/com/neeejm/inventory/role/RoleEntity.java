@@ -18,8 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.Hibernate;
-
+import com.neeejm.inventory.common.entities.BaseEntity;
+import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
 
 import lombok.AllArgsConstructor;
@@ -38,12 +38,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleEntity implements Serializable {
-    @Id
-    @GeneratedValue
-    private UUID id;
+public class RoleEntity extends BaseEntity {
 
-    @NotBlank(message = "Can't be blank")
+    @ValidEnum(enumClass = Role.class)
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -58,7 +55,7 @@ public class RoleEntity implements Serializable {
     @Builder.Default
     private Set<PrivilegeEntity> privileges = new HashSet<>();
 
-    public enum RoleName {
+    public enum Role {
         ROLE_SALES_MANAGER,
         ROLE_PURCHASES_MANAGER,
         ROLE_ADMIN
@@ -71,13 +68,13 @@ public class RoleEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         RoleEntity role = (RoleEntity) o;
         return id != null && Objects.equals(id, role.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return this.getClass().hashCode();
     }
 }

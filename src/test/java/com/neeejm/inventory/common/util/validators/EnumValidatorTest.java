@@ -28,7 +28,7 @@ class EnumValidatorTest {
 
             @Override
             public Class<? extends Enum<?>> enumClass() {
-                return RoleEntity.RoleName.class;
+                return RoleEntity.Role.class;
             }
 
             @Override

@@ -24,90 +24,90 @@ public class AppConfig {
     @Autowired
     private RoleRepository roleRepository;
 
-    @EventListener
-    public void seed(ContextRefreshedEvent event) {
-        loadPrivileges();
-        loadDefaultRoles();
-    }
+    // @EventListener
+    // public void seed(ContextRefreshedEvent event) {
+    //     loadPrivileges();
+    //     loadDefaultRoles();
+    // }
 
-    private void loadPrivileges() {
-        if (privilegeRepository.findAll().size() == 0) {
-            Arrays.stream(PrivilegeEntity.PrivilegeName.values()).forEach(
-                    p -> {
-                        privilegeRepository.save(
-                                PrivilegeEntity.builder()
-                                        .name(p.toString())
-                                        .build());
-                        log.info("SEED_PRIVILEGES ==> " + p.toString());
-                    });
-            log.info("Privileges seeding done");
-        } else {
-            log.info("Privileges seeding not required");
-        }
-    }
+    // private void loadPrivileges() {
+    //     if (privilegeRepository.findAll().size() == 0) {
+    //         Arrays.stream(PrivilegeEntity.PrivilegeName.values()).forEach(
+    //                 p -> {
+    //                     privilegeRepository.save(
+    //                             PrivilegeEntity.builder()
+    //                                     .name(p.toString())
+    //                                     .build());
+    //                     log.info("SEED_PRIVILEGES ==> " + p.toString());
+    //                 });
+    //         log.info("Privileges seeding done");
+    //     } else {
+    //         log.info("Privileges seeding not required");
+    //     }
+    // }
 
-    private void loadDefaultRoles() {
-        if (roleRepository.findAll().size() == 0) {
-            saveAdminRole();
-            savePurchasesRole();
-            saveSalesRole();
-            log.info("Roles seeding done");
-        } else {
-            log.info("Roles seeding not required");
-        }
-    }
+    // private void loadDefaultRoles() {
+    //     if (roleRepository.findAll().size() == 0) {
+    //         saveAdminRole();
+    //         savePurchasesRole();
+    //         saveSalesRole();
+    //         log.info("Roles seeding done");
+    //     } else {
+    //         log.info("Roles seeding not required");
+    //     }
+    // }
 
-    private void saveAdminRole() {
-        RoleEntity adminRole = RoleEntity.builder()
-                .name(RoleEntity.RoleName.ROLE_ADMIN.toString())
-                .privileges(Set.of(
-                        privilegeRepository.findByName(
-                            PrivilegeEntity.PrivilegeName.OP_ALL.toString()
-                        ).get()
-                ))
-                .build();
-        roleRepository.save(adminRole);
-    }
+    // private void saveAdminRole() {
+    //     RoleEntity adminRole = RoleEntity.builder()
+    //             .name(RoleEntity.RoleName.ROLE_ADMIN.toString())
+    //             .privileges(Set.of(
+    //                     privilegeRepository.findByName(
+    //                         PrivilegeEntity.PrivilegeName.OP_ALL.toString()
+    //                     ).get()
+    //             ))
+    //             .build();
+    //     roleRepository.save(adminRole);
+    // }
 
-    private void saveSalesRole() {
-        RoleEntity salesManagerRole = RoleEntity.builder()
-                .name(RoleEntity.RoleName.ROLE_SALES_MANAGER.toString())
-                .privileges(Set.of(
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_CREATE_SALES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_DELETE_SALES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_READ_SALES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_UPDATE_SALES.toString()
-                    ).get()
-                ))
-                .build();
-        roleRepository.save(salesManagerRole);
-    }
+    // private void saveSalesRole() {
+    //     RoleEntity salesManagerRole = RoleEntity.builder()
+    //             .name(RoleEntity.RoleName.ROLE_SALES_MANAGER.toString())
+    //             .privileges(Set.of(
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_CREATE_SALES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_DELETE_SALES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_READ_SALES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_UPDATE_SALES.toString()
+    //                 ).get()
+    //             ))
+    //             .build();
+    //     roleRepository.save(salesManagerRole);
+    // }
 
-    private void savePurchasesRole() {
-        RoleEntity purchasesManagerRole = RoleEntity.builder()
-                .name(RoleEntity.RoleName.ROLE_PURCHASES_MANAGER.toString())
-                .privileges(Set.of(
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_CREATE_PURCHASES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_DELETE_PURCHASES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_READ_PURCHASES.toString()
-                    ).get(),
-                    privilegeRepository.findByName(
-                        PrivilegeEntity.PrivilegeName.OP_UPDATE_PURCHASES.toString()
-                    ).get()
-                ))
-                .build();
-        roleRepository.save(purchasesManagerRole);
-    }
+    // private void savePurchasesRole() {
+    //     RoleEntity purchasesManagerRole = RoleEntity.builder()
+    //             .name(RoleEntity.RoleName.ROLE_PURCHASES_MANAGER.toString())
+    //             .privileges(Set.of(
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_CREATE_PURCHASES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_DELETE_PURCHASES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_READ_PURCHASES.toString()
+    //                 ).get(),
+    //                 privilegeRepository.findByName(
+    //                     PrivilegeEntity.PrivilegeName.OP_UPDATE_PURCHASES.toString()
+    //                 ).get()
+    //             ))
+    //             .build();
+    //     roleRepository.save(purchasesManagerRole);
+    // }
 }

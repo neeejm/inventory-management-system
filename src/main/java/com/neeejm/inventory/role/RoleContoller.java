@@ -30,11 +30,11 @@ public class RoleContoller {
         this.privilegeAssembler = new PrivilegeDTOAssembler();
     }
 
-    @RequestMapping(
-        path = "roles/{role_id}/privileges/{privilege_id}",
-        method = RequestMethod.PATCH,
-        produces = "application/hal+json"
-    )
+    // @RequestMapping(
+    //     path = "roles/{role_id}/privileges/{privilege_id}",
+    //     method = RequestMethod.PATCH,
+    //     produces = "application/hal+json"
+    // )
     public ResponseEntity<CollectionModel<PrivilegeDTO>> appendPrivilege(
             @PathVariable("role_id") UUID roleId,
             @PathVariable("privilege_id") UUID privilegeId) {

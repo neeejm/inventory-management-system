@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.Hibernate;
-
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
@@ -60,13 +58,13 @@ public class PrivilegeEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         PrivilegeEntity privilege = (PrivilegeEntity) o;
         return id != null && Objects.equals(id, privilege.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return this.getClass().hashCode();
     }
 }

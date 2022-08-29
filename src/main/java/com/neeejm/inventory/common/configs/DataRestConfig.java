@@ -19,43 +19,43 @@ public class DataRestConfig implements RepositoryRestConfigurer {
     @Autowired
     private EntityManager entityManager;
 
-    @Bean
-    public RepositoryRestConfigurer repositoryRestConfigurer() {
+    // @Bean
+    // public RepositoryRestConfigurer repositoryRestConfigurer() {
 
-        return new RepositoryRestConfigurer() {
+    //     return new RepositoryRestConfigurer() {
 
-            @Override
-            public void configureRepositoryRestConfiguration(
-                    RepositoryRestConfiguration config,
-                    CorsRegistry cors) {
+    //         @Override
+    //         public void configureRepositoryRestConfiguration(
+    //                 RepositoryRestConfiguration config,
+    //                 CorsRegistry cors) {
 
-                entityManager.getMetamodel().getEntities().forEach(entity -> {
-                    config.exposeIdsFor(entity.getJavaType());
-                });
+    //             entityManager.getMetamodel().getEntities().forEach(entity -> {
+    //                 config.exposeIdsFor(entity.getJavaType());
+    //             });
 
-                config.getExposureConfiguration()
-                        .forDomainType(BaseEntity.class)
-                        .disablePutForCreation();
+    //             config.getExposureConfiguration()
+    //                     .forDomainType(BaseEntity.class)
+    //                     .disablePutForCreation();
 
-                config.getExposureConfiguration()
-                        .forDomainType(PrivilegeEntity.class)
-                        .withItemExposure(
-                                (metadata, httpMethods) -> httpMethods.disable(
-                                        HttpMethod.POST,
-                                        HttpMethod.PUT,
-                                        HttpMethod.PATCH,
-                                        HttpMethod.DELETE)
+    //             config.getExposureConfiguration()
+    //                     .forDomainType(PrivilegeEntity.class)
+    //                     .withItemExposure(
+    //                             (metadata, httpMethods) -> httpMethods.disable(
+    //                                     HttpMethod.POST,
+    //                                     HttpMethod.PUT,
+    //                                     HttpMethod.PATCH,
+    //                                     HttpMethod.DELETE)
 
-                        )
-                        .withCollectionExposure(
-                                (metadata, httpMethods) -> httpMethods.disable(
-                                        HttpMethod.POST,
-                                        HttpMethod.PUT,
-                                        HttpMethod.PATCH,
-                                        HttpMethod.DELETE)
+    //                     )
+    //                     .withCollectionExposure(
+    //                             (metadata, httpMethods) -> httpMethods.disable(
+    //                                     HttpMethod.POST,
+    //                                     HttpMethod.PUT,
+    //                                     HttpMethod.PATCH,
+    //                                     HttpMethod.DELETE)
 
-                        );
-            }
-        };
-    }
+    //                     );
+    //         }
+    //     };
+    // }
 }
