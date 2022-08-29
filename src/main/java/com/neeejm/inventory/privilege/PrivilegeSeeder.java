@@ -23,7 +23,7 @@ public class PrivilegeSeeder {
 
     private void loadPrivileges() {
         if (privilegeRepository.findAll().size() == 0) {
-            Arrays.stream(PrivilegeEntity.PrivilegeName.values()).forEach(
+            Arrays.stream(PrivilegeEntity.Privilege.values()).forEach(
                     p -> {
                         privilegeRepository.save(
                                 PrivilegeEntity.builder()

@@ -32,11 +32,11 @@ public class PrivilegeEntity implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @ValidEnum(enumClass = PrivilegeName.class)
+    @ValidEnum(enumClass = Privilege.class)
     @Column(nullable = false, unique = true)
     private String name;
 
-    public enum PrivilegeName {
+    public enum Privilege {
         OP_ALL,
 
         OP_CREATE_SALES,
