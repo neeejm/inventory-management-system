@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models.assemblers;
+package com.neeejm.inventory.dtos.assemblers;
 
 import java.util.Collections;
 import java.util.Set;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.neeejm.inventory.controllers.RoleContoller;
+import com.neeejm.inventory.dtos.PrivilegeModel;
+import com.neeejm.inventory.dtos.RoleModel;
 import com.neeejm.inventory.entities.Privilege;
 import com.neeejm.inventory.entities.Role;
-import com.neeejm.inventory.models.PrivilegeModel;
-import com.neeejm.inventory.models.RoleModel;
 
 @Component
 public class RoleModelAssembler

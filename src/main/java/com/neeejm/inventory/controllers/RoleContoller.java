@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.neeejm.inventory.dtos.PrivilegeModel;
+import com.neeejm.inventory.dtos.RoleModel;
+import com.neeejm.inventory.dtos.assemblers.PrivilegeModelAssembler;
+import com.neeejm.inventory.dtos.assemblers.RoleModelAssembler;
 import com.neeejm.inventory.entities.Privilege;
 import com.neeejm.inventory.entities.Role;
-import com.neeejm.inventory.models.PrivilegeModel;
-import com.neeejm.inventory.models.RoleModel;
-import com.neeejm.inventory.models.assemblers.PrivilegeModelAssembler;
-import com.neeejm.inventory.models.assemblers.RoleModelAssembler;
 import com.neeejm.inventory.repositories.PrivilegeRepository;
 import com.neeejm.inventory.repositories.RoleRepository;
 

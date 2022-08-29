@@ -1,4 +1,4 @@
-package com.neeejm.inventory.models;
+package com.neeejm.inventory.dtos;
 
 import java.util.Set;
 import java.util.UUID;
