@@ -15,9 +15,6 @@ import com.neeejm.inventory.common.entities.BaseEntity;
 @Configuration
 public class PrivilegeRestConfig {
 
-    @Autowired
-    private EntityManager entityManager;
-
     @Bean
     public RepositoryRestConfigurer privilegeRepositoryRestConfigurer() {
 
@@ -28,14 +25,6 @@ public class PrivilegeRestConfig {
                     RepositoryRestConfiguration config,
                     CorsRegistry cors) {
 
-                entityManager.getMetamodel().getEntities().forEach(entity -> {
-                    config.exposeIdsFor(entity.getJavaType());
-                });
-
-                config.getExposureConfiguration()
-                        .forDomainType(BaseEntity.class)
-                        .disablePutForCreation();
-
                 config.getExposureConfiguration()
                         .forDomainType(PrivilegeEntity.class)
                         .withItemExposure(
@@ -43,17 +32,13 @@ public class PrivilegeRestConfig {
                                         HttpMethod.POST,
                                         HttpMethod.PUT,
                                         HttpMethod.PATCH,
-                                        HttpMethod.DELETE)
-
-                        )
+                                        HttpMethod.DELETE))
                         .withCollectionExposure(
                                 (metadata, httpMethods) -> httpMethods.disable(
                                         HttpMethod.POST,
                                         HttpMethod.PUT,
                                         HttpMethod.PATCH,
-                                        HttpMethod.DELETE)
-
-                        );
+                                        HttpMethod.DELETE));
             }
         };
     }
