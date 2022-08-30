@@ -36,19 +36,20 @@ public abstract class BaseEntity implements Serializable {
     protected UUID id;
 
     @Version
+    @JsonIgnore
     protected Long version;
 
-    @JsonIgnore
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
+    @JsonIgnore
     protected Date createdAt = new Date();
 
-    @JsonIgnore
     @LastModifiedDate
     @Column(name = "modified_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
+    @JsonIgnore
     protected Date modifiedAt = new Date();
 }
