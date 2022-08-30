@@ -40,7 +40,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RoleEntity extends BaseEntity {
 
-    @ValidEnum(enumClass = Role.class)
+    @ValidRoleName
     @Column(nullable = false, unique = true)
     private String name;
 

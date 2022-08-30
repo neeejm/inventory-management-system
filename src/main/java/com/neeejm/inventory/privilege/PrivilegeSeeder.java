@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class PrivilegeSeeder {
     private PrivilegeRepository privilegeRepository;
 
     @EventListener
+    @Order(1)
     public void seed(ContextRefreshedEvent event) {
         loadPrivileges();
     }
