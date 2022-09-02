@@ -19,7 +19,7 @@ bin/
 .gradle
 **/build/
 !src/**/build/
-!gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper
 
 # Ignore Gradle GUI config
 gradle-app.setting
