@@ -15,7 +15,6 @@ import lombok.Setter;
 @Setter
 @JsonInclude(Include.NON_NULL)
 public class ApiError {
-    // customizing timestamp serialization format
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date timestamp;
 
