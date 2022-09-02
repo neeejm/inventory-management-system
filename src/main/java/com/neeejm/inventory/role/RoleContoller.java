@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.neeejm.inventory.role.dto.RoleDTO;
+import com.neeejm.inventory.role.dto.RoleDTOAssembler;
+import com.neeejm.inventory.role.service.RoleService;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,28 +38,11 @@ public class RoleContoller {
         produces = "application/hal+json"
     )
     // public @ResponseBody ResponseEntity<CollectionModel<PrivilegeDTO>> appendPrivilege(
-    public @ResponseBody ResponseEntity<?> appendPrivilege(
+    public @ResponseBody ResponseEntity<RoleDTO> appendPrivilege(
             @PathVariable("role_id") UUID roleId,
             @PathVariable("privilege_id") UUID privilegeId) {
 
-        try {
-
-            RoleEntity role = roleService.appendPrivilegeToRole(privilegeId, roleId);
-            return ResponseEntity.ok(roleAssembler.toModel(role));
-
-        } catch (EntityNotFoundException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (EntityExistsException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+        RoleEntity role = roleService.appendPrivilegeToRole(privilegeId, roleId);
+        return ResponseEntity.ok(roleAssembler.toModel(role));
     }
 }

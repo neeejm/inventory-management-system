@@ -1,27 +1,26 @@
-package com.neeejm.inventory.role;
+package com.neeejm.inventory.role.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.neeejm.inventory.privilege.PrivilegeEntity;
 import com.neeejm.inventory.privilege.PrivilegeRepository;
+import com.neeejm.inventory.role.RoleEntity;
+import com.neeejm.inventory.role.RoleRepository;
 
 @Service
-public class RoleServiceIml implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;
 
     @Autowired
-    public RoleServiceIml(
+    public RoleServiceImpl(
             final RoleRepository roleRepository,
             final PrivilegeRepository privilegeRepository) {
 

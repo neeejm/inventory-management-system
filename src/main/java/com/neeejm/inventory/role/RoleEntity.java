@@ -21,6 +21,7 @@ import javax.validation.constraints.NotBlank;
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
+import com.neeejm.inventory.role.validator.ValidRoleName;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

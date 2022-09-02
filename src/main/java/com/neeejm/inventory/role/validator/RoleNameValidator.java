@@ -1,4 +1,4 @@
-package com.neeejm.inventory.role;
+package com.neeejm.inventory.role.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

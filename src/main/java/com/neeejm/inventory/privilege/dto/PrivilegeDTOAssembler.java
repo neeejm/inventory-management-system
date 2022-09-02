@@ -1,4 +1,4 @@
-package com.neeejm.inventory.privilege;
+package com.neeejm.inventory.privilege.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.neeejm.inventory.privilege.PrivilegeEntity;
 import com.neeejm.inventory.role.RoleContoller;
 
 @Component
