@@ -8,6 +8,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class RestExceptionHandler {
 
-    @Value("#{new Boolean('${app.api-error.include-stacktrace}')}")
+    @Value("#{new Boolean('${app.api-error.include-stacktrace:false}')}")
     private Boolean includeStackTrace;
 
     @ExceptionHandler({
@@ -33,16 +34,21 @@ public class RestExceptionHandler {
     })
     public final ResponseEntity<ApiError> handleException(Exception exception) {
 
-        log.error(exception.getMessage());
 
         if (exception instanceof EntityNotFoundException) {
+            log.error("Entity not found!", exception);
             return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
         } else if (exception instanceof EntityExistsException) {
+            log.error("Entity exists!", exception);
             return handleErrorResponse(HttpStatus.FOUND, exception);
-        } else if (exception instanceof MutliEntityException) {
+        } else if (exception instanceof MutliEntityException ||
+                exception instanceof DataIntegrityViolationException) {
+            log.error("Bad request!", exception);
             return handleErrorResponse(HttpStatus.BAD_REQUEST, exception);
         } else {
-            return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception);
+            log.error("Ops! (server error)", exception);
+            return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                    new Exception("Unexpected error :("));
         }
     }
 
@@ -63,7 +69,6 @@ public class RestExceptionHandler {
                 new ApiError(
                         status,
                         getErrorMessages(exception),
-                        getStackTrace(exception),
                         Urls.getRequestUrl()));
     }
 

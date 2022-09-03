@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.Hibernate;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
@@ -37,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CategoryEntity extends BaseEntity {
     @NotBlank(message = "Can't ne blank")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotBlank(message = "Can(t be blank")
@@ -67,7 +66,7 @@ public class CategoryEntity extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         CategoryEntity category = (CategoryEntity) o;
         return getId() != null && Objects.equals(getId(), category.getId());
     }
