@@ -2,6 +2,7 @@ package com.neeejm.inventory.common.exceptions;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Set;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -9,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -25,6 +27,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({
             EntityNotFoundException.class,
+            MutliEntityException.class,
             EntityExistsException.class,
             Exception.class
     })
@@ -36,6 +39,8 @@ public class RestExceptionHandler {
             return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
         } else if (exception instanceof EntityExistsException) {
             return handleErrorResponse(HttpStatus.FOUND, exception);
+        } else if (exception instanceof MutliEntityException) {
+            return handleErrorResponse(HttpStatus.BAD_REQUEST, exception);
         } else {
             return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception);
         }
@@ -49,7 +54,7 @@ public class RestExceptionHandler {
             return ResponseEntity.status(status).body(
                     new ApiError(
                             status,
-                            exception.getMessage(),
+                            getErrorMessages(exception),
                             getStackTrace(exception),
                             Urls.getRequestUrl()));
         }
@@ -57,7 +62,8 @@ public class RestExceptionHandler {
         return ResponseEntity.status(status).body(
                 new ApiError(
                         status,
-                        exception.getMessage(),
+                        getErrorMessages(exception),
+                        getStackTrace(exception),
                         Urls.getRequestUrl()));
     }
 
@@ -65,5 +71,12 @@ public class RestExceptionHandler {
         StringWriter sw = new StringWriter();
         exception.printStackTrace(new PrintWriter(sw));
         return sw.toString();
+    }
+
+    private Set<String> getErrorMessages(Exception exception) {
+        if (exception.getMessage().contains(",")) {
+            return Set.of(StringUtils.split(exception.getMessage(), ","));
+        }
+        return Set.of(exception.getMessage());
     }
 }

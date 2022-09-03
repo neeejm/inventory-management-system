@@ -1,6 +1,8 @@
 package com.neeejm.inventory.common.exceptions;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 
@@ -22,7 +24,7 @@ public class ApiError {
 
     private String status;
 
-    private String message;
+    private Set<String> errors;
 
     private String stackTrace;
 
@@ -30,27 +32,27 @@ public class ApiError {
 
     public ApiError(
             HttpStatus httpStatus,
-            String message,
+            Set<String> errors,
             String stackTrace,
             String path) {
 
         this.timestamp = new Date();
         this.code = httpStatus.value();
         this.status = httpStatus.name();
-        this.message = message;
+        this.errors = errors;
         this.stackTrace = stackTrace;
         this.path = path;
     }
 
     public ApiError(
             HttpStatus httpStatus,
-            String message,
+            Set<String> errors,
             String path) {
 
         this.timestamp = new Date();
         this.code = httpStatus.value();
         this.status = httpStatus.name();
-        this.message = message;
+        this.errors = errors;
         this.stackTrace = null;
         this.path = path;
     }
