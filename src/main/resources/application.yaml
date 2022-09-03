@@ -33,9 +33,17 @@ server:
   port: '${SERVER_PORT:8089}'
 
 
-# logging:
-#   level:
-#     root: 'DEBUG'
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: 'httptrace'
+
+
+logging:
+  level:
+    '[org.springframework.web.filter.CommonsRequestLoggingFilter]': 'DEBUG'
+    # root: 'DEBUG'
 
 
 app:
