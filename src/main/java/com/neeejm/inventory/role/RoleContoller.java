@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.neeejm.inventory.privilege.PrivilegeEntity;
-import com.neeejm.inventory.privilege.PrivilegeEntity.Privilege;
 import com.neeejm.inventory.role.dto.RoleDTO;
 import com.neeejm.inventory.role.dto.RoleDTOAssembler;
 import com.neeejm.inventory.role.service.RoleService;
