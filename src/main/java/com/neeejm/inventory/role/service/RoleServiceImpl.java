@@ -17,6 +17,9 @@ import com.neeejm.inventory.privilege.PrivilegeRepository;
 import com.neeejm.inventory.role.RoleEntity;
 import com.neeejm.inventory.role.RoleRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -38,6 +41,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleEntity appendPrivilegeToRole(UUID privilegeId, UUID roleId) {
+        log.info("helooooooooooooooooooooooooooooo");
 
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(
                 () -> new EntityNotFoundException(roleNotFoundMessage.formatted(roleId)));
@@ -62,14 +66,13 @@ public class RoleServiceImpl implements RoleService {
 
         privileges.forEach(p -> {
             privilegeRepository.findById(p.getId()).ifPresentOrElse(
-                __ -> {
-                    if (role.getPrivileges().contains(p)) {
-                        errorMessages.add(privilegeExistInRoleMessage.formatted(roleId, p.getId()));
-                    }
-                    role.appendPrivilege(p);
-                },
-                ()-> errorMessages.add(privilegeNotFoundMessage.formatted(p.getId()))
-            );
+                    __ -> {
+                        if (role.getPrivileges().contains(p)) {
+                            errorMessages.add(privilegeExistInRoleMessage.formatted(roleId, p.getId()));
+                        }
+                        role.appendPrivilege(p);
+                    },
+                    () -> errorMessages.add(privilegeNotFoundMessage.formatted(p.getId())));
         });
 
         if (errorMessages.size() > 0) {
