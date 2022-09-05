@@ -23,9 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private final String roleNotFoundMessage = "Role with id: '%s' not found";
-    private final String privilegeNotFoundMessage = "Privilege with id: '%s' not found";
-    private final String privilegeExistInRoleMessage = "Role with id '%s' already have privilege with id: '%s'";
+    private final String ROLE_NOT_FOUND_MESSAGE = "Role with id: '%s' not found";
+    private final String PRIVILEGE_NOT_FOUND_MESSAGE = "Privilege with id: '%s' not found";
+    private final String PRIVILEGE_EXISTS_IN_ROLE_MESSAGE = "Role with id '%s' already have " +
+                                                            "privilege with id: '%s'";
 
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;
@@ -41,15 +42,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleEntity appendPrivilegeToRole(UUID privilegeId, UUID roleId) {
-        log.info("helooooooooooooooooooooooooooooo");
-
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(
-                () -> new EntityNotFoundException(roleNotFoundMessage.formatted(roleId)));
+                () -> new EntityNotFoundException(ROLE_NOT_FOUND_MESSAGE.formatted(roleId)));
         PrivilegeEntity privilege = privilegeRepository.findById(privilegeId).orElseThrow(
-                () -> new EntityNotFoundException(privilegeNotFoundMessage.formatted(privilegeId)));
+                () -> new EntityNotFoundException(PRIVILEGE_NOT_FOUND_MESSAGE.formatted(privilegeId)));
 
         if (role.getPrivileges().contains(privilege)) {
-            throw new EntityExistsException(privilegeExistInRoleMessage.formatted(roleId, privilegeId));
+            throw new EntityExistsException(PRIVILEGE_EXISTS_IN_ROLE_MESSAGE.formatted(roleId, privilegeId));
         }
 
         role.appendPrivilege(privilege);
@@ -60,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleEntity appendPrivilegesToRole(List<PrivilegeEntity> privileges, UUID roleId) {
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(
-                () -> new EntityNotFoundException(roleNotFoundMessage.formatted(roleId)));
+                () -> new EntityNotFoundException(ROLE_NOT_FOUND_MESSAGE.formatted(roleId)));
 
         Set<String> errorMessages = new HashSet<>();
 
@@ -68,11 +67,11 @@ public class RoleServiceImpl implements RoleService {
             privilegeRepository.findById(p.getId()).ifPresentOrElse(
                     __ -> {
                         if (role.getPrivileges().contains(p)) {
-                            errorMessages.add(privilegeExistInRoleMessage.formatted(roleId, p.getId()));
+                            errorMessages.add(PRIVILEGE_EXISTS_IN_ROLE_MESSAGE.formatted(roleId, p.getId()));
                         }
                         role.appendPrivilege(p);
                     },
-                    () -> errorMessages.add(privilegeNotFoundMessage.formatted(p.getId())));
+                    () -> errorMessages.add(PRIVILEGE_NOT_FOUND_MESSAGE.formatted(p.getId())));
         });
 
         if (errorMessages.size() > 0) {
