@@ -43,7 +43,7 @@ server:
 logging:
   level:
     '[org.springframework.web.filter.CommonsRequestLoggingFilter]': 'DEBUG'
-    # root: 'DEBUG'
+    '[com.neeejm.inventory]': 'DEBUG'
 
 
 app:

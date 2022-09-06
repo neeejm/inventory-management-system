@@ -9,6 +9,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -35,21 +36,29 @@ public class RestExceptionHandler {
     public final ResponseEntity<ApiError> handleException(Exception exception) {
 
 
-        if (exception instanceof EntityNotFoundException) {
+        if (exception instanceof EntityNotFoundException /* ||
+            exception instanceof ResourceNotFoundException */) {
+
             log.error("Entity not found!", exception);
             return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
-        } else if (exception instanceof EntityExistsException) {
+        }
+        
+        if (exception instanceof EntityExistsException) {
+
             log.error("Entity exists!", exception);
             return handleErrorResponse(HttpStatus.FOUND, exception);
-        } else if (exception instanceof MutliEntityException ||
-                exception instanceof DataIntegrityViolationException) {
+        }
+
+        if (exception instanceof MutliEntityException ||
+            exception instanceof DataIntegrityViolationException) {
+
             log.error("Bad request!", exception);
             return handleErrorResponse(HttpStatus.BAD_REQUEST, exception);
-        } else {
-            log.error("Ops! (server error)", exception);
-            return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
-                    new Exception("Unexpected error :("));
         }
+
+        log.error("Ops! (server error)", exception);
+        return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                new Exception("Unexpected error :("));
     }
 
     private ResponseEntity<ApiError> handleErrorResponse(

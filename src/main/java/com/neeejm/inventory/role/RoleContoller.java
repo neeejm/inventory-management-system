@@ -49,7 +49,7 @@ public class RoleContoller {
         method = RequestMethod.PATCH,
         produces = "application/hal+json"
     )
-    public @ResponseBody ResponseEntity<RoleDTO> appendPrivilege(
+    public @ResponseBody ResponseEntity<RoleDTO> appendPrivileges(
         @PathVariable("role_id") UUID roleId,
         @RequestBody List<PrivilegeEntity> privileges) {
 
