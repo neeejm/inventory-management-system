@@ -2,6 +2,8 @@ package com.neeejm.inventory.role;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import com.neeejm.inventory.common.exceptions.ApiError;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
 import com.neeejm.inventory.privilege.PrivilegeRepository;
 import com.neeejm.inventory.role.dto.RoleDTO;
@@ -23,6 +26,8 @@ public class RoleContollerIntegrationTest {
 
     private static final String APPLICATION_HAL_JSON = "application/hal+json";
     private static final String APPLICATION_JSON = "application/json";
+
+    private final String ROLE_NOT_FOUND_MESSAGE = "Role with id: '%s' not found";
 
     @Value("${spring.data.rest.base-path}")
     private String basePath;
@@ -42,16 +47,16 @@ public class RoleContollerIntegrationTest {
     void setup() {
         privilege = privilegeRepository.findByName(PrivilegeEntity.Privilege.OP_ALL.toString()).get();
 
-        role = roleRepository.save(
-                RoleEntity.builder()
+        role = RoleEntity.builder()
                         .name("role_integration_test")
-                        .build());
+                        .build();
         log.debug("[TEST] Role({}, {}): ", role.getId(), role.getName());
     }
 
     @Test
-    void shouldReturnRoleOnAppendPrivilege() throws Exception {
+    void shouldReturnRoleOnAppendPrivilege() {
         // Given
+        role = roleRepository.save(role);
         String url = basePath + "/roles/{role_id}/privileges/{privilege_id}";
 
         // When
@@ -65,6 +70,25 @@ public class RoleContollerIntegrationTest {
                     assertThat(r.getId()).isEqualTo(role.getId());
                     assertThat(r.getPrivileges()).isNotEmpty().hasSize(1)
                             .extracting(p -> p.getId()).first().isEqualTo(privilege.getId());
+                });
+    }
+
+    @Test
+    void shouldReturnEntityNotFoundOnAppendPrivilege() {
+        // Given
+        String url = basePath + "/roles/{role_id}/privileges/{privilege_id}";
+        UUID randomId = UUID.randomUUID();
+
+        // When
+        // Then
+        wClient.patch()
+                .uri(url, randomId, privilege.getId())
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectHeader().contentType(APPLICATION_JSON)
+                .expectBody(ApiError.class).value(e -> {
+                    assertThat(e.getErrors()).isNotEmpty().hasSize(1)
+                            .containsExactly(ROLE_NOT_FOUND_MESSAGE.formatted(randomId));
                 });
     }
 }
