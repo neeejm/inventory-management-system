@@ -29,6 +29,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class PrivilegeEntity implements Serializable {
     @Id
+    @Column(columnDefinition = "uuid")
     @GeneratedValue
     private UUID id;
 
