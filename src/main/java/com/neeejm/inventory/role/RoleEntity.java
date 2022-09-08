@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
-import com.neeejm.inventory.role.validator.ValidRoleName;
+import com.neeejm.inventory.role.validator.annotation.ValidRoleName;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@EntityListeners(RoleListener.class)
 @Entity
 @Table(name = "role")
 @Getter

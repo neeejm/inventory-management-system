@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.neeejm.inventory.common.util.Urls;
+import com.neeejm.inventory.role.ReadOnlyRoleException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,32 +30,45 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({
             EntityNotFoundException.class,
+            ResourceNotFoundException.class
+    })
+    private ResponseEntity<ApiError> handlNotFoundException(Exception exception) {
+
+        log.error("Entity not found!", exception);
+
+        if (exception instanceof ResourceNotFoundException) {
+            return handleErrorResponse(HttpStatus.NOT_FOUND, "Entity not found!", exception);
+        }
+
+        return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
+    }
+
+    @ExceptionHandler({
+            EntityExistsException.class
+    })
+    private ResponseEntity<ApiError> handlExsitsException(Exception exception) {
+
+        log.error("Entity exists!", exception);
+
+        return handleErrorResponse(HttpStatus.FOUND, exception);
+    }
+
+    @ExceptionHandler({
             MutliEntityException.class,
-            EntityExistsException.class,
+            DataIntegrityViolationException.class,
+            ReadOnlyRoleException.class
+    })
+    private ResponseEntity<ApiError> handlBasRequestException(Exception exception) {
+
+        log.error("Bad request!", exception);
+
+        return handleErrorResponse(HttpStatus.BAD_REQUEST, exception);
+    }
+
+    @ExceptionHandler({
             Exception.class
     })
     public final ResponseEntity<ApiError> handleException(Exception exception) {
-
-
-        if (exception instanceof EntityNotFoundException /* ||
-            exception instanceof ResourceNotFoundException */) {
-
-            log.error("Entity not found!", exception);
-            return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
-        }
-        
-        if (exception instanceof EntityExistsException) {
-
-            log.error("Entity exists!", exception);
-            return handleErrorResponse(HttpStatus.FOUND, exception);
-        }
-
-        if (exception instanceof MutliEntityException ||
-            exception instanceof DataIntegrityViolationException) {
-
-            log.error("Bad request!", exception);
-            return handleErrorResponse(HttpStatus.BAD_REQUEST, exception);
-        }
 
         log.error("Ops! (server error)", exception);
         return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -78,6 +92,27 @@ public class RestExceptionHandler {
                 new ApiError(
                         status,
                         getErrorMessages(exception),
+                        Urls.getRequestUrl()));
+    }
+
+    private ResponseEntity<ApiError> handleErrorResponse(
+            HttpStatus status,
+            String msg,
+            Exception exception) {
+
+        if (includeStackTrace) {
+            return ResponseEntity.status(status).body(
+                    new ApiError(
+                            status,
+                            Set.of(msg),
+                            getStackTrace(exception),
+                            Urls.getRequestUrl()));
+        }
+
+        return ResponseEntity.status(status).body(
+                new ApiError(
+                        status,
+                        Set.of(msg),
                         Urls.getRequestUrl()));
     }
 
