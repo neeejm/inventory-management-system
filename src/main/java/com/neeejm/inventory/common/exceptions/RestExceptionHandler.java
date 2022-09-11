@@ -2,20 +2,26 @@ package com.neeejm.inventory.common.exceptions;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.neeejm.inventory.common.errors.ApiError;
+import com.neeejm.inventory.common.errors.ValidationError;
 import com.neeejm.inventory.common.util.Urls;
 import com.neeejm.inventory.role.ReadOnlyRoleException;
 
@@ -32,12 +38,12 @@ public class RestExceptionHandler {
             EntityNotFoundException.class,
             ResourceNotFoundException.class
     })
-    private ResponseEntity<ApiError> handlNotFoundException(Exception exception) {
+    private ResponseEntity<ApiError<String>> handlNotFoundException(Exception exception) {
 
         log.error("Entity not found!", exception);
 
         if (exception instanceof ResourceNotFoundException) {
-            return handleErrorResponse(HttpStatus.NOT_FOUND, "Entity not found!", exception);
+            return handleErrorResponse(HttpStatus.NOT_FOUND, Set.of("Entity not found!"), exception);
         }
 
         return handleErrorResponse(HttpStatus.NOT_FOUND, exception);
@@ -46,11 +52,11 @@ public class RestExceptionHandler {
     @ExceptionHandler({
             EntityExistsException.class
     })
-    private ResponseEntity<ApiError> handlExsitsException(Exception exception) {
+    private ResponseEntity<ApiError<String>> handlExsitsException(Exception exception) {
 
         log.error("Entity exists!", exception);
 
-        return handleErrorResponse(HttpStatus.FOUND, exception);
+        return handleErrorResponse(HttpStatus.CONFLICT, exception);
     }
 
     @ExceptionHandler({
@@ -58,7 +64,7 @@ public class RestExceptionHandler {
             DataIntegrityViolationException.class,
             ReadOnlyRoleException.class
     })
-    private ResponseEntity<ApiError> handlBasRequestException(Exception exception) {
+    private ResponseEntity<ApiError<String>> handlBadRequestException(Exception exception) {
 
         log.error("Bad request!", exception);
 
@@ -66,22 +72,50 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler({
+            TransactionSystemException.class
+    })
+    private ResponseEntity<ApiError<ValidationError>> handlValidationException(Exception exception) throws Exception {
+
+        // if (ExceptionUtils.indexOfType(exception.getCause().getCause(), ConstraintViolationException.class) != -1) {
+
+            ConstraintViolationException e = (ConstraintViolationException) exception.getCause().getCause();
+
+            log.error("Validation Error!", e);
+
+            Set<ValidationError> validationErrors = new HashSet<>(); 
+            e.getConstraintViolations().forEach(v -> {
+                log.info("validator {} / {}", v.getMessageTemplate(), v.getPropertyPath());
+                validationErrors.add(new ValidationError(
+                    v.getPropertyPath().toString(),
+                    v.getMessageTemplate()
+                ));
+            });
+            return handleErrorResponse(
+                    HttpStatus.UNPROCESSABLE_ENTITY,
+                    validationErrors,
+                    exception);
+        // }
+
+        // return null;
+    }
+
+    @ExceptionHandler({
             Exception.class
     })
-    public final ResponseEntity<ApiError> handleException(Exception exception) {
+    public final ResponseEntity<ApiError<String>> handleException(Exception exception) {
 
         log.error("Ops! (server error)", exception);
         return handleErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                 new Exception("Unexpected error :("));
     }
 
-    private ResponseEntity<ApiError> handleErrorResponse(
+    private ResponseEntity<ApiError<String>> handleErrorResponse(
             HttpStatus status,
             Exception exception) {
 
         if (includeStackTrace) {
             return ResponseEntity.status(status).body(
-                    new ApiError(
+                    new ApiError<String>(
                             status,
                             getErrorMessages(exception),
                             getStackTrace(exception),
@@ -89,30 +123,30 @@ public class RestExceptionHandler {
         }
 
         return ResponseEntity.status(status).body(
-                new ApiError(
+                new ApiError<String>(
                         status,
                         getErrorMessages(exception),
                         Urls.getRequestUrl()));
     }
 
-    private ResponseEntity<ApiError> handleErrorResponse(
+    private <T> ResponseEntity<ApiError<T>> handleErrorResponse(
             HttpStatus status,
-            String msg,
+            Set<T> msgs,
             Exception exception) {
 
         if (includeStackTrace) {
             return ResponseEntity.status(status).body(
-                    new ApiError(
+                    new ApiError<>(
                             status,
-                            Set.of(msg),
+                            msgs,
                             getStackTrace(exception),
                             Urls.getRequestUrl()));
         }
 
         return ResponseEntity.status(status).body(
-                new ApiError(
+                new ApiError<>(
                         status,
-                        Set.of(msg),
+                        msgs,
                         Urls.getRequestUrl()));
     }
 

@@ -1,4 +1,4 @@
-package com.neeejm.inventory.common.exceptions;
+package com.neeejm.inventory.common.errors;
 
 import java.util.Date;
 import java.util.Set;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class ApiError {
+public class ApiError<T> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date timestamp;
 
@@ -25,7 +25,7 @@ public class ApiError {
 
     private String status;
 
-    private Set<String> errors;
+    private Set<T> errors;
 
     private String stackTrace;
 
@@ -33,7 +33,7 @@ public class ApiError {
 
     public ApiError(
             HttpStatus httpStatus,
-            Set<String> errors,
+            Set<T> errors,
             String stackTrace,
             String path) {
 
@@ -47,7 +47,7 @@ public class ApiError {
 
     public ApiError(
             HttpStatus httpStatus,
-            Set<String> errors,
+            Set<T> errors,
             String path) {
 
         this.timestamp = new Date();

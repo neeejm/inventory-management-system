@@ -37,7 +37,7 @@ public class RoleListener {
         RoleEntity currentRole = roleRepository.findById(role.getId()).orElseThrow();
         Arrays.stream(RoleEntity.Role.values()).forEach(r -> {
             if (currentRole.getName().equals(r.toString())) {
-                log.info("[DEFAULT_ROLE] " + READ_ONLY_MSG, role.getName(), role.getId());
+                log.info("[DEFAULT_ROLE] " + READ_ONLY_MSG.formatted(role.getName(), role.getId()));
 
                 throw new ReadOnlyRoleException(READ_ONLY_MSG.formatted(role.getName(),
                         role.getId()));

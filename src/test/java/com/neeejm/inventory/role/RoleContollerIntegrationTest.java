@@ -12,12 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.neeejm.inventory.common.exceptions.ApiError;
+import com.neeejm.inventory.common.errors.ApiError;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
 import com.neeejm.inventory.privilege.PrivilegeRepository;
 import com.neeejm.inventory.role.dto.RoleDTO;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @ActiveProfiles("test")
@@ -89,6 +90,27 @@ public class RoleContollerIntegrationTest {
                 .expectBody(ApiError.class).value(e -> {
                     assertThat(e.getErrors()).isNotEmpty().hasSize(1)
                             .containsExactly(ROLE_NOT_FOUND_MESSAGE.formatted(randomId));
+                });
+    }
+
+    @Test
+    void testValidation() {
+        // Given
+        String url = basePath + "/roles";
+        RoleEntity notAValidRole = RoleEntity.builder()
+                                            .name("role_")
+                                            .build();
+
+        // When
+        // Then
+        wClient.post()
+                .uri(url)
+                .body(Mono.just(notAValidRole), RoleEntity.class)
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectHeader().contentType(APPLICATION_JSON)
+                .expectBody(ApiError.class).value(e -> {
+                    assertThat(e.getErrors()).isNotEmpty().hasSize(1);
                 });
     }
 }

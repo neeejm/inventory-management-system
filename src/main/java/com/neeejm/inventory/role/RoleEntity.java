@@ -26,7 +26,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@EntityListeners(RoleListener.class)
 @Entity
 @Table(name = "role")
 @Getter
