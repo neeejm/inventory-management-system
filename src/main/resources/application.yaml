@@ -1,23 +1,51 @@
 spring:
   config:
     import: 'optional:file:.local.env.properties'
+
+  output:
+    ansi:
+      enabled: always
+
   banner:
     location: 'banner.txt'
+
   datasource:
     url: 'jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}'
     username: '${DB_USERNAME}'
     password: '${DB_PASSWORD}'
+
   jpa:
     hibernate:
-      ddl-auto: 'create-drop'
+      ddl-auto: 'update'
     show-sql: 'true'
     properties:
       hibernate:
+        dialect: 'org.hibernate.dialect.PostgreSQLDialect'
         '[format_sql]': 'true'
+
+  data:
+    rest:
+      base-path: '/api/v1'
+      default-page-size: 10
+
 
 server:
   port: '${SERVER_PORT:8089}'
 
-# logging:
-#   level:
-#     root: 'DEBUG'
+
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: 'httptrace'
+
+
+logging:
+  level:
+    '[org.springframework.web.filter.CommonsRequestLoggingFilter]': 'DEBUG'
+    '[com.neeejm.inventory]': 'DEBUG'
+
+
+app:
+  api-error: 
+    include-stacktrace: true

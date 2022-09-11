@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "app.api-error.include-stacktrace",
+  "type": "java.lang.String",
+  "description": "Whether to include stacktrace to http error response (default: false)."
+}]}
