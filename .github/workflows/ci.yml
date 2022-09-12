@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-build:
-    name: Running Test and building
+    name: Testing and Building
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
