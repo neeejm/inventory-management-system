@@ -47,3 +47,13 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task unitTest(type: Test) {
+	exclude '**/*IntegrationTests*'
+	useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+	include '**/*IntegrationTests*'
+	useJUnitPlatform()
+}

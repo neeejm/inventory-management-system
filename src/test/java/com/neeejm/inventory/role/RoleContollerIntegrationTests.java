@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RoleContollerIntegrationTest {
+public class RoleContollerIntegrationTests {
 
     private static final String APPLICATION_HAL_JSON = "application/hal+json";
     private static final String APPLICATION_JSON = "application/json";

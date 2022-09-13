@@ -27,7 +27,7 @@ import com.neeejm.inventory.role.RoleEntity;
 import com.neeejm.inventory.role.RoleRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class RoleServiceImplTest {
+public class RoleServiceImplTests {
 
     private final String ROLE_NOT_FOUND_MESSAGE = "Role with id: '%s' not found";
     private final String PRIVILEGE_NOT_FOUND_MESSAGE = "Privilege with id: '%s' not found";

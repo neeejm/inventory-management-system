@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
 import com.neeejm.inventory.role.RoleEntity;
 
-class EnumValidatorTest {
+class EnumValidatorTests {
     private static final EnumValidator enumValidator = new EnumValidator();
     private static ValidEnum validEnum;
 
