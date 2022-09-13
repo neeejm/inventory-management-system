@@ -1,11 +1,9 @@
 name: Test Environment
 
 on:
-  push:
-    branches:
-      - test
-    path-ignore:
-      - "**/README.md"
+  workflow_run:
+    workflows: ["Build"]
+    types: ["successful"]
 
 jobs:
   build:
