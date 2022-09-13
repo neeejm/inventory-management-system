@@ -1,4 +1,4 @@
-name: Build
+name: Test Environment
 
 on:
   push:
@@ -23,9 +23,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-    
-      - name: Build source
-        run: ./gradlew clean build -x test
 
-      - name: UnitTest
-        run: ./gradlew clean unitTest
+      - name: Integration Test
+        run: ./gradlew clean integrationTest
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
