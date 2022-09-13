@@ -1,14 +1,16 @@
 name: Test eh
 
 on:
-  push:
-    branches:
-      - test
+  workflow_run:
+    workflows: 
+      - Build
+    types: 
+      - completed
 
 jobs:
-  build:
-    name: Build
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,9 +23,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-    
-      - name: Build source
-        run: ./gradlew clean build -x test
 
-      - name: Unit Test
-        run: ./gradlew clean unitTest
+      - name: Integration Test
+        run: ./gradlew clean integrationTest
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
