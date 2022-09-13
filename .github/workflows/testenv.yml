@@ -1,35 +1,35 @@
 name: Test Environment
 
-# on:
-#   workflow_run:
-#     workflows: 
-#       - Build
-#     types: 
-#       - completed
-#     branches:
-#       - test
+on:
+  workflow_run:
+    workflows: 
+      - Build
+    types: 
+      - completed
+    branches:
+      - test
 
-# jobs:
-#   on-success:
-#     runs-on: ubuntu-latest
-#     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-#       - name: Setup JDK
-#         uses: actions/setup-java@v3
-#         with:
-#           distribution: "zulu"
-#           java-version: "17"
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
 
-#       - name: Setup Gradle
-#         uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-#       - name: Integration Test
-#         run: ./gradlew clean integrationTest
-#         env:
-#           DB_HOST: ${{ secrets.DB_HOST }}
-#           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-#           DB_USER: ${{ secrets.DB_USER }}
-#           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - name: Integration Test
+        run: ./gradlew clean integrationTest
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
