@@ -1,4 +1,4 @@
-name: Test eh
+name: Test Env
 
 on:
   workflow_run:
