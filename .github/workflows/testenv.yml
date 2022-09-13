@@ -2,13 +2,12 @@ name: Test Environment
 
 on:
   workflow_run:
+    branches:
+      - test
     workflows: 
       - Build
     types: 
       - completed
-
-  branches:
-    - test
 
 jobs:
   on-success:
