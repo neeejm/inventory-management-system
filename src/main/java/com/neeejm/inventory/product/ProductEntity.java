@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.URL;
 
 import com.neeejm.inventory.category.CategoryEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidSubcategory;
+import com.neeejm.inventory.privilege.validator.ValidSubcategory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

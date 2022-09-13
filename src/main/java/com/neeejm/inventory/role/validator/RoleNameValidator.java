@@ -3,8 +3,6 @@ package com.neeejm.inventory.role.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.neeejm.inventory.role.validator.annotation.ValidRoleName;
-
 public class RoleNameValidator implements ConstraintValidator<ValidRoleName, String> {
 
     // must follow snake_case pattern and start with 'ROLE'

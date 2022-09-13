@@ -1,4 +1,4 @@
-package com.neeejm.inventory.role.validator.annotation;
+package com.neeejm.inventory.role.validator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-
-import com.neeejm.inventory.role.validator.RoleNameValidator;
 
 @Documented
 @Constraint(validatedBy = RoleNameValidator.class)
