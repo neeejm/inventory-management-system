@@ -2,8 +2,7 @@ name: CI -Backend
 
 on:
   push:
-    branches:
-      - test
+    branches: [test]
     path-ignore:
       - "**/README.md"
 
@@ -35,7 +34,10 @@ jobs:
   
   test-env:
     name: Test Environment
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     needs: 
       - Build
     steps:
