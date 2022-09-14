@@ -55,7 +55,7 @@ sonarqube {
     property "sonar.sources", "src/main"
     property "sonar.test", "src/test"
     property "sonar.java.binaries", "build/classes"
-    property "sonar.java.libraries", "build/libs"
+    // property "sonar.java.libraries", "build/libs"
 	property "sonar.coverage.exclusions", ""
   }
 }
