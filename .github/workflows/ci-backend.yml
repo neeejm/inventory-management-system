@@ -67,10 +67,16 @@ jobs:
     name: Code Analysis
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: "corretto"
+        java-version: "17"
     - name: SonarQube Scan
       run: ./gradlew sonarqube --info
       env:
