@@ -33,7 +33,7 @@ jobs:
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
-    needs: [Build]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -57,7 +57,7 @@ jobs:
   sonarqube:
     name: Code Analysis
     runs-on: ubuntu-latest
-    needs: [Build]
+    needs: [build]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -88,7 +88,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-    needs: [Unit Test, Code Analysis]
+    needs: [unit-test, sonarqube]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
