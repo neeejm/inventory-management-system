@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
-import com.neeejm.inventory.role.validator.annotation.ValidRoleName;
+import com.neeejm.inventory.role.validator.ValidRoleName;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,10 +1,9 @@
-package com.neeejm.inventory.common.util.validators;
+package com.neeejm.inventory.privilege.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.neeejm.inventory.category.CategoryEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidSubcategory;
 
 public class SubcategoryValidator implements ConstraintValidator<ValidSubcategory, CategoryEntity> {
 
