@@ -69,4 +69,6 @@ build/
 
 ### MY ###
 *.env.properties
-!.example.env.properties
+!.template.env.properties
+.env
+sonar-project.properties
