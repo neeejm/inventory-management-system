@@ -52,6 +52,10 @@ sonarqube {
     property "sonar.organization", env.SONAR_ORGANIZATION.value
     property "sonar.login", env.SONAR_TOKEN.value
     property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.sources", "src/main"
+    property "sonar.test", "src/test"
+    property "sonar.java.binaries", "build/classes"
+    property "sonar.java.libraries", "build/libs"
   }
 }
 
