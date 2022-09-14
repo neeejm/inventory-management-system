@@ -49,6 +49,7 @@ sonarqube {
   properties {
     property "sonar.projectKey", "neeejm_inventory-management-system"
     property "sonar.organization", "neeejm"
+    property "sonar.login", "fd3d4ecf55eb63f4ef0950dcd40f52665dad735e"
     property "sonar.host.url", "https://sonarcloud.io"
   }
 }
