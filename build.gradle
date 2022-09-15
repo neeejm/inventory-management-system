@@ -47,6 +47,12 @@ dependencies {
 	// annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
 sonarqube {
   properties {
     property "sonar.projectKey", env.SONAR_PROJECT_KEY.value
@@ -57,6 +63,7 @@ sonarqube {
     property "sonar.test", "src/test"
     property "sonar.java.binaries", "build/classes"
     property "sonar.java.libraries", "build/libs"
+    property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
   }
 }
 

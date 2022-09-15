@@ -33,36 +33,39 @@ jobs:
 
       - name: Unit Test
         run: ./gradlew clean unitTest
+
+      - name: Code Analysis
+        run: ./gradlew sonarqube
         
-      - name: Cache build dir
-        uses: actions/cache@v3
-        with:
-          path: ./build
-          key: ${{ hashFiles('settings.gradle') }}-build
+      # - name: Cache build dir
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./build
+      #     key: ${{ hashFiles('settings.gradle') }}-build
 
 
-  sonarqube:
-    name: Code Analysis
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
+  # sonarqube:
+  #   name: Code Analysis
+  #   runs-on: ubuntu-latest
+  #   needs: [build]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         # Disabling shallow clone is recommended for improving relevancy of reporting
+  #         fetch-depth: 0
 
-      - name: Restore cached build dir
-        uses: actions/cache@v3
-        with:
-          path: ./build
-          key: ${{ hashFiles('settings.gradle') }}-build
+  #     - name: Restore cached build dir
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ./build
+  #         key: ${{ hashFiles('settings.gradle') }}-build
         
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #     - name: SonarQube Scan
+  #       uses: sonarsource/sonarqube-scan-action@master
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
 
   test-env:
