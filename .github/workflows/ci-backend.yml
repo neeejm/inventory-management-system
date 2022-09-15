@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew clean unitTest
 
       - name: Code Analysis
-        run: ./gradlew sonarqube
+        uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
