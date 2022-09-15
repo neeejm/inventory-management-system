@@ -30,6 +30,19 @@ jobs:
     
       - name: Build source
         run: ./gradlew clean build -x test
+        
+      - name: Cache build dir
+        id: build-cache
+        uses: actions/cache@v2
+        # env:
+        #   cache-name: cache-node-modules
+        with:
+          path: ~/.build
+          key: ${{ runner.os }}-build
+          # restore-keys: |
+          #   ${{ runner.os }}-build-${{ env.cache-name }}-
+          #   ${{ runner.os }}-build-
+          #   ${{ runner.os }}-
 
 
   unit-test:
@@ -94,7 +107,15 @@ jobs:
         # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
 
+    # - name: Use cached build
+      # uses: actions/cache@v2
+      # with:
+      #   path: ~/.build
+      #   key: ${{ runner.os }}-build
+      
+
     - name: SonarQube Scan
+      if: build.steps.build-cache.outputs.cache-hit != 'true'
       uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
