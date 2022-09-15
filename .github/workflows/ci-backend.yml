@@ -34,11 +34,11 @@ jobs:
       - name: Unit Test
         run: ./gradlew clean unitTest
 
-      - name: Cache build dir
-        uses: actions/cache@v3
-        with:
-          path: ./build
-          key: ${{ hashFiles('settings.gradle') }}-build
+      # - name: Cache build dir
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./build
+      #     key: ${{ hashFiles('settings.gradle') }}-build
 
       - name: Code Analysis
         run: ./gradlew sonarqube
