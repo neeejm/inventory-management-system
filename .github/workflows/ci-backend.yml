@@ -36,6 +36,9 @@ jobs:
 
       - name: Code Analysis
         run: ./gradlew sonarqube
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
         
       # - name: Cache build dir
       #   uses: actions/cache@v3
