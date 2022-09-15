@@ -62,7 +62,7 @@ jobs:
         run: ./gradlew clean unitTest
   
 
-  sonarqube-2:
+  sonarqube:
     name: Code Analysis
     runs-on: ubuntu-latest
     needs: [build]
