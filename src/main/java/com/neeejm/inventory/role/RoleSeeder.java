@@ -29,7 +29,7 @@ public class RoleSeeder {
     }
 
     private void loadDefaultRoles() {
-        if (roleRepository.findAll().size() == 0) {
+        if (roleRepository.findAll().isEmpty()) {
             saveAdminRole();
             savePurchasesRole();
             saveSalesRole();
@@ -45,7 +45,7 @@ public class RoleSeeder {
                 .privileges(Set.of(
                         privilegeRepository.findByName(
                             PrivilegeEntity.Privilege.OP_ALL.toString()
-                        ).get()
+                        ).orElseThrow()
                 ))
                 .build();
         roleRepository.save(adminRole);
@@ -57,16 +57,16 @@ public class RoleSeeder {
                 .privileges(Set.of(
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_CREATE_SALES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_DELETE_SALES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_READ_SALES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_UPDATE_SALES.toString()
-                    ).get()
+                    ).orElseThrow()
                 ))
                 .build();
         roleRepository.save(salesManagerRole);
@@ -78,16 +78,16 @@ public class RoleSeeder {
                 .privileges(Set.of(
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_CREATE_PURCHASES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_DELETE_PURCHASES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_READ_PURCHASES.toString()
-                    ).get(),
+                    ).orElseThrow(),
                     privilegeRepository.findByName(
                         PrivilegeEntity.Privilege.OP_UPDATE_PURCHASES.toString()
-                    ).get()
+                    ).orElseThrow()
                 ))
                 .build();
         roleRepository.save(purchasesManagerRole);
