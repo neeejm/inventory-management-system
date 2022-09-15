@@ -62,28 +62,28 @@ jobs:
         run: ./gradlew clean unitTest
   
 
-  sonarqube:
+  sonarqube-2:
     name: Code Analysis
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
-          # disabling shallow clone is recommended for improving relevancy of reporting
+          # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - name: restore cached build dir
+      - name: Restore cached build dir
         uses: actions/cache@v3
         with:
           path: ./build
-          key: ${{ hashfiles('settings.gradle') }}-build
+          key: ${{ hashFiles('settings.gradle') }}-build
         
-      - name: sonarqube scan
+      - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
-          sonar_token: ${{ secrets.SONAR_TOKEN }}
-          sonar_host_url: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
 
   test-env:
