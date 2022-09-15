@@ -41,7 +41,7 @@ jobs:
           key: ${{ hashFiles('settings.gradle') }}-build
 
       - name: Code Analysis
-        uses: sonarsource/sonarqube-scan-action@master
+        run: ./gradlew sonarqube
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
