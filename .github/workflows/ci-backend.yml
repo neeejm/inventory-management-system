@@ -34,17 +34,17 @@ jobs:
       - name: Unit Test
         run: ./gradlew clean unitTest
 
+      - name: Cache build dir
+        uses: actions/cache@v3
+        with:
+          path: ./build
+          key: ${{ hashFiles('settings.gradle') }}-build
+
       - name: Code Analysis
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
-        
-      # - name: Cache build dir
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ./build
-      #     key: ${{ hashFiles('settings.gradle') }}-build
 
 
   # sonarqube:
