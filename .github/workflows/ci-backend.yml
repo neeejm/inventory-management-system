@@ -11,7 +11,10 @@ on:
 jobs:
   build:
     name: Build
-    permissions: read-all
+    permissions:
+      checks: read
+      deployments: read
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
