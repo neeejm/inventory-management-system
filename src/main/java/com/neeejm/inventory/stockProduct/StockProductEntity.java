@@ -1,4 +1,4 @@
-package com.neeejm.inventory.stockProduct;
+package com.neeejm.inventory.stockproduct;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -32,15 +32,6 @@ public class StockProductEntity {
     @EmbeddedId
     @Builder.Default
     private StockProductId id = new StockProductId();
-    // @Id  
-    // @Column(name = "stock_id")
-    // @JsonIgnore
-    // private UUID stockId;
-
-    // @Id
-    // @Column(name = "product_id")
-    // @JsonIgnore
-    // private UUID productId;
 
     @ManyToOne
     @MapsId("stockId")
@@ -56,21 +47,4 @@ public class StockProductEntity {
     @Min(value = 1, message = "Can't be less than 1")
     @Column(nullable = false)
     private Integer quantity;
-
-    // @Override
-    // public boolean equals(Object o) {
-    //     if (this == o) return true;
-    //     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    //     StockProduct that = (StockProduct) o;
-    //     return stockId != null && productId != null
-    //             && Objects.equals(stockId, that.stockId)
-    //             && Objects.equals(productId, that.productId);
-    // }
-
-    // @Override
-    // public int hashCode() {
-    //     return Objects.hash(
-    //         stockId.hashCode() * productId.hashCode()
-    //     );
-    // }
 }

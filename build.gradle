@@ -39,6 +39,11 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 
+	// docs
+	implementation "org.springdoc:springdoc-openapi-ui:1.6.11"
+	implementation "org.springdoc:springdoc-openapi-data-rest:1.6.11"
+	implementation "org.springdoc:springdoc-openapi-hateoas:1.6.11"
+
 	// others
 	implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.53'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'

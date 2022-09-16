@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.stockProduct.StockProductEntity;
+import com.neeejm.inventory.stockproduct.StockProductEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
