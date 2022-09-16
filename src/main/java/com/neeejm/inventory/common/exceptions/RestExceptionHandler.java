@@ -9,7 +9,6 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -76,27 +75,21 @@ public class RestExceptionHandler {
     })
     private ResponseEntity<ApiError<ValidationError>> handlValidationException(Exception exception) throws Exception {
 
-        // if (ExceptionUtils.indexOfType(exception.getCause().getCause(), ConstraintViolationException.class) != -1) {
+        ConstraintViolationException e = (ConstraintViolationException) exception.getCause().getCause();
 
-            ConstraintViolationException e = (ConstraintViolationException) exception.getCause().getCause();
+        log.error("Validation Error!", e);
 
-            log.error("Validation Error!", e);
-
-            Set<ValidationError> validationErrors = new HashSet<>(); 
-            e.getConstraintViolations().forEach(v -> {
-                log.info("validator {} / {}", v.getMessageTemplate(), v.getPropertyPath());
-                validationErrors.add(new ValidationError(
+        Set<ValidationError> validationErrors = new HashSet<>();
+        e.getConstraintViolations().forEach(v -> {
+            log.info("validator {} / {}", v.getMessageTemplate(), v.getPropertyPath());
+            validationErrors.add(new ValidationError(
                     v.getPropertyPath().toString(),
-                    v.getMessageTemplate()
-                ));
-            });
-            return handleErrorResponse(
-                    HttpStatus.UNPROCESSABLE_ENTITY,
-                    validationErrors,
-                    exception);
-        // }
-
-        // return null;
+                    v.getMessageTemplate()));
+        });
+        return handleErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                validationErrors,
+                exception);
     }
 
     @ExceptionHandler({
