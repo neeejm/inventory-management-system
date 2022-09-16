@@ -1,17 +1,21 @@
 package com.neeejm.inventory.customer.entities;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.Hibernate;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+
+import org.hibernate.Hibernate;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "person")
 @Getter
 @Setter
 @ToString

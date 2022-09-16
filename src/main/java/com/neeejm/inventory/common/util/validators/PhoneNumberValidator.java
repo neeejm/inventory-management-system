@@ -30,7 +30,7 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
     }
 
     private boolean isValidNumber(String value) throws NumberParseException {
-        if (nullable && value.equals(null)) {
+        if (nullable && value == null) {
             return true;
         }
         return phoneNumberUtil.isValidNumber(

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Table(name = "stock")
 @Getter
 @Setter
 @ToString

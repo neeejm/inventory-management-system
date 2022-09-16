@@ -42,7 +42,7 @@ class EnumValidatorTests {
 
             @Override
             public Class<? extends Payload>[] payload() {
-                return new Class[0];
+                return null;
             }
         };
         enumValidator.initialize(validEnum);

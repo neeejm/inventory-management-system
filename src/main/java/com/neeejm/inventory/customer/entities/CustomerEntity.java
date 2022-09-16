@@ -68,8 +68,8 @@ public abstract class CustomerEntity extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CustomerEntity client = (CustomerEntity) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        CustomerEntity customer = (CustomerEntity) o;
+        return getId() != null && Objects.equals(getId(), customer.getId());
     }
 
     @Override
