@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
 
         Set<String> errorMessages = new HashSet<>();
 
-        privileges.forEach(p -> {
+        privileges.forEach(p ->
             privilegeRepository.findById(p.getId()).ifPresentOrElse(
                     __ -> {
                         if (role.getPrivileges().contains(p)) {
@@ -71,10 +71,10 @@ public class RoleServiceImpl implements RoleService {
                         }
                         role.appendPrivilege(p);
                     },
-                    () -> errorMessages.add(PRIVILEGE_NOT_FOUND_MESSAGE.formatted(p.getId())));
-        });
+                    () -> errorMessages.add(PRIVILEGE_NOT_FOUND_MESSAGE.formatted(p.getId())))
+        );
 
-        if (errorMessages.size() > 0) {
+        if (!errorMessages.isEmpty()) {
             throw new MutliEntityException(errorMessages);
         }
 

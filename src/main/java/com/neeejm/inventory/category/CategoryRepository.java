@@ -1,6 +1,7 @@
 package com.neeejm.inventory.category;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,9 @@ import org.springframework.data.rest.core.annotation.RestResource;
     itemResourceRel = "category"
 )
 public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> {
+
+    Optional<CategoryEntity> findByName(String name);
+
     @RestResource(path = "type")
     List<CategoryEntity> findByTypeIgnoreCase(@Param("type") String type, Pageable pageable);
 

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.util.StringUtils;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -90,6 +91,15 @@ public class RestExceptionHandler {
                 HttpStatus.UNPROCESSABLE_ENTITY,
                 validationErrors,
                 exception);
+    }
+
+    @ExceptionHandler({
+        HttpRequestMethodNotSupportedException.class
+    })
+    public final ResponseEntity<ApiError<String>> handleUnsuppertedMethoException(Exception exception) {
+        
+        log.error("Not Supported HTTP Method!", exception);
+        return handleErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, exception);
     }
 
     @ExceptionHandler({
