@@ -12,8 +12,12 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @Configuration
 public class DataRestConfig {
     
+    private final EntityManager entityManager;
+
     @Autowired
-    private EntityManager entityManager;
+    public DataRestConfig(final EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {

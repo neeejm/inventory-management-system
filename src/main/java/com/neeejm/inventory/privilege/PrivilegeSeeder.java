@@ -33,9 +33,9 @@ public class PrivilegeSeeder {
                                         .build());
                         log.info("SEED_PRIVILEGES ==> " + p.toString());
                     });
-            log.info("Privileges seeding done");
+            log.info("[SEED] Privileges seeding done");
         } else {
-            log.info("Privileges seeding not required");
+            log.info("[SEED] Privileges seeding not required");
         }
     }
 }

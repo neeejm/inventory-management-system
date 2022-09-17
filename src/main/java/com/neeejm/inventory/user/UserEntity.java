@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,13 +20,16 @@ import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.role.RoleEntity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "\"user\"")
+@SuperBuilder
 @Getter
 @Setter
 @ToString
@@ -56,15 +58,19 @@ public class UserEntity extends BaseEntity{
     private String lastName;
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST}
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
     @ToString.Exclude
+    @Builder.Default
     private Set<RoleEntity> roles = new HashSet<>();
+
+    public void appendRole(RoleEntity role) {
+        this.roles.add(role);
+    }
 
     @Override
     public boolean equals(Object o) {

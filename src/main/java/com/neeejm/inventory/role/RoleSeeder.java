@@ -33,9 +33,9 @@ public class RoleSeeder {
             saveAdminRole();
             savePurchasesRole();
             saveSalesRole();
-            log.info("Roles seeding done");
+            log.info("[SEED] Roles seeding done");
         } else {
-            log.info("Roles seeding not required");
+            log.info("[SEED] Roles seeding not required");
         }
     }
 

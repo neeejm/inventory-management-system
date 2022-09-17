@@ -106,7 +106,7 @@ public class RestExceptionHandler {
             HttpStatus status,
             Exception exception) {
 
-        if (includeStackTrace) {
+        if (Boolean.TRUE.equals(includeStackTrace)) {
             return ResponseEntity.status(status).body(
                     new ApiError<String>(
                             status,
@@ -127,7 +127,7 @@ public class RestExceptionHandler {
             Set<T> msgs,
             Exception exception) {
 
-        if (includeStackTrace) {
+        if (Boolean.TRUE.equals(includeStackTrace)) {
             return ResponseEntity.status(status).body(
                     new ApiError<>(
                             status,
