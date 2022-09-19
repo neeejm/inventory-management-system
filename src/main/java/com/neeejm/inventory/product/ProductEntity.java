@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.URL;
 
 import com.neeejm.inventory.category.CategoryEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.privilege.validator.ValidSubcategory;
+import com.neeejm.inventory.common.util.validators.annotations.ValidCategory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,7 +65,7 @@ public class ProductEntity extends BaseEntity {
             fetch = FetchType.EAGER,
             optional = false
     )
-    @ValidSubcategory
+    @ValidCategory
     private CategoryEntity subcategory;
 
     @Override

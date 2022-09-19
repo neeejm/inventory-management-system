@@ -1,4 +1,4 @@
-package com.neeejm.inventory.privilege.validator;
+package com.neeejm.inventory.common.util.validators.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,12 +9,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+import com.neeejm.inventory.category.CategoryEntity;
+import com.neeejm.inventory.common.util.validators.CategoryValidator;
+
 @Documented
-@Constraint(validatedBy = SubcategoryValidator.class)
+@Constraint(validatedBy = CategoryValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidSubcategory {
-    String message() default "Not a subcategory";
+public @interface ValidCategory {
+    boolean nullable() default false;
+    CategoryEntity.CategoryType type() default CategoryEntity.CategoryType.SUBCATEGORY;
+    String message() default "Not the expected category type";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

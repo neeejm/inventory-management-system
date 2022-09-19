@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
+import com.neeejm.inventory.common.util.validators.annotations.ValidCategory;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
@@ -48,6 +49,7 @@ public class CategoryEntity extends BaseEntity {
         fetch = FetchType.EAGER
     )
     @JoinColumn(name = "parent_category_id")
+    @ValidCategory(type = CategoryType.PARENT_CATEGORY, nullable = true)
     private CategoryEntity parentCategory;
 
     @OneToMany(
