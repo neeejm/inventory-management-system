@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
@@ -39,7 +39,7 @@ public class CategoryEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @NotBlank(message = "Can(t be blank")
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     @ValidEnum(enumClass = CategoryType.class)
     private String type;

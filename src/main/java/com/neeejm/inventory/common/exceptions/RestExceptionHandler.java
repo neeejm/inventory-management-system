@@ -43,7 +43,8 @@ public class RestExceptionHandler {
         log.error("Entity not found!", exception);
 
         if (exception instanceof ResourceNotFoundException) {
-            return handleErrorResponse(HttpStatus.NOT_FOUND, Set.of("Entity not found!"), exception);
+            return handleErrorResponse(HttpStatus.NOT_FOUND,
+                    Set.of("Ressource Not found!"),exception);
         }
 
         return handleErrorResponse(HttpStatus.NOT_FOUND, exception);

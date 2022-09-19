@@ -17,11 +17,19 @@ import org.springframework.data.rest.core.annotation.RestResource;
 )
 public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> {
 
+    @RestResource(exported = false)
     Optional<CategoryEntity> findByName(String name);
 
     @RestResource(path = "type")
     List<CategoryEntity> findByTypeIgnoreCase(@Param("type") String type, Pageable pageable);
 
     @RestResource(path = "name-containing")
-    List<CategoryEntity> findByNameIgnoreCaseContaining(@Param("name") String name, Pageable pageable);
+    List<CategoryEntity> findByNameIgnoreCaseContaining(@Param("value") String name, Pageable pageable);
+
+    @RestResource(path = "by")
+    List<CategoryEntity> findByNameIgnoreCaseContainingAndTypeIgnoreCase(
+            @Param("value") String name,
+            @Param("type") String type,
+            Pageable pageable
+    );
 }
