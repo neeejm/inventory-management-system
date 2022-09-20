@@ -53,16 +53,15 @@ public class OrderEntity extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NotNull(message = "Can't be null")
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
 
-    @NotNull(message = "Can't be null")
+    @NotBlank(message = "Can't be blank")
     @ValidEnum(enumClass = Type.class)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    private String type;
 
     @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = Status.class)

@@ -2,9 +2,7 @@ package com.neeejm.inventory.customer.entities;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.Hibernate;
 
@@ -23,12 +21,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonEntity extends CustomerEntity {
-    @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
+    
     private String firstName;
 
-    @NotBlank(message = "Can't be blank")
-    @Column(nullable = false)
     private String lastName;
 
     @Override

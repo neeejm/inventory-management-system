@@ -23,8 +23,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyEntity extends CustomerEntity{
-    @NotBlank(message = "Can't be blank")
-    @Column(unique = true, nullable = false)
     private String name;
 
     @Override

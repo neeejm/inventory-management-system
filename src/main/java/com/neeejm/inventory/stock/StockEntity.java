@@ -46,11 +46,6 @@ public class StockEntity extends BaseEntity{
     )
     private AddressEntity address;
 
-    // @OneToMany
-    // @JoinColumn(name = "stock_id")
-    // @Builder.Default
-    // private Set<StockProduct> products = new HashSet<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

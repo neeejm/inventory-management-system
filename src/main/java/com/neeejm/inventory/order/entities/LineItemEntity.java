@@ -1,10 +1,11 @@
 package com.neeejm.inventory.order.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -40,9 +41,20 @@ public class LineItemEntity extends BaseEntity {
 			fetch = FetchType.EAGER,
 			optional = false
 	)
-	@JoinColumns({
-		@JoinColumn(name = "stock_id"),
-		@JoinColumn(name = "product_id")
-	})
+	@JoinColumn(name = "stock_id")
+	@JoinColumn(name = "product_id")
 	private StockProductEntity stockProduct;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        LineItemEntity lineItem = (LineItemEntity) o;
+        return getId() != null && Objects.equals(getId(), lineItem.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

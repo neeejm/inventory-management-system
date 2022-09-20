@@ -1,5 +1,8 @@
 package com.neeejm.inventory.stockproduct;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -28,7 +31,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockProductEntity {
+public class StockProductEntity implements Serializable {
+
+    @Serial
+	private static final long serialVersionUID = 3L;
+
     @EmbeddedId
     @Builder.Default
     private StockProductId id = new StockProductId();
