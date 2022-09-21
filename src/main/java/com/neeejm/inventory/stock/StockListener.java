@@ -9,6 +9,9 @@ import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 
+import com.neeejm.inventory.stock.entities.StockEntity;
+import com.neeejm.inventory.stock.repositories.StockRepository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

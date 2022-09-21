@@ -2,6 +2,7 @@ package com.neeejm.inventory.customer.entities;
 
 import java.util.Objects;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import org.hibernate.Hibernate;
@@ -14,6 +15,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@DiscriminatorValue("person")
 @Getter
 @Setter
 @ToString

@@ -1,4 +1,4 @@
-package com.neeejm.inventory.stock;
+package com.neeejm.inventory.stock.entities;
 
 import java.util.Objects;
 

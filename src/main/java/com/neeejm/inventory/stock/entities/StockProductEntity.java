@@ -1,4 +1,4 @@
-package com.neeejm.inventory.stockproduct;
+package com.neeejm.inventory.stock.entities;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,7 +14,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.neeejm.inventory.product.ProductEntity;
-import com.neeejm.inventory.stock.StockEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

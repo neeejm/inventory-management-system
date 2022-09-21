@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -17,6 +19,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 import com.neeejm.inventory.common.entities.AddressEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
@@ -33,6 +36,11 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "customer")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="customer_type", 
+    discriminatorType = DiscriminatorType.STRING
+)
+@DiscriminatorFormula("case when name is null then 'person' else 'company' end")
 @Getter
 @Setter
 @ToString

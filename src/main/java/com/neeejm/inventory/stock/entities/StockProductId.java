@@ -1,4 +1,4 @@
-package com.neeejm.inventory.stockproduct;
+package com.neeejm.inventory.stock.entities;
 
 import java.io.Serial;
 import java.io.Serializable;

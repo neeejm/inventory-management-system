@@ -3,6 +3,7 @@ package com.neeejm.inventory.customer.entities;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 
@@ -16,6 +17,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@DiscriminatorValue("company")
 @Getter
 @Setter
 @ToString

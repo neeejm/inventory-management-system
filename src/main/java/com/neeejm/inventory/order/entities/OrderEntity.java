@@ -8,8 +8,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -53,7 +51,7 @@ public class OrderEntity extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedShipmentDate;
 
-    @NotBlank(message = "Can't be blank")
+    @NotNull(message = "Can't be null")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date actualShipmentDate;
@@ -66,8 +64,7 @@ public class OrderEntity extends BaseEntity {
     @NotNull(message = "Can't be null")
     @ValidEnum(enumClass = Status.class)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status;
 
     @Column(columnDefinition = "text")
     private String terms;
@@ -88,12 +85,15 @@ public class OrderEntity extends BaseEntity {
     @Column(unique = true)
     private String invoiceUrl;
 
+    @NotNull(message = "Can't be null")
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
     )
+
     private CustomerEntity client;
 
+    @NotNull(message = "Can't be null")
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
@@ -105,7 +105,7 @@ public class OrderEntity extends BaseEntity {
     }
 
     public enum Status {
-        ORDERED, PACKED, ON_HOLD, IN_TRANSIT, SHIPPED
+        DRAFT, ORDERED, SHIPPED
     }
 
     @Override

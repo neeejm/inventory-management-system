@@ -1,4 +1,4 @@
-package com.neeejm.inventory.stock;
+package com.neeejm.inventory.stock.repositories;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
+
+import com.neeejm.inventory.stock.entities.StockEntity;
 
 @RepositoryRestResource(
     path = "stocks",

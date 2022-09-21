@@ -12,7 +12,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.stockproduct.StockProductEntity;
+import com.neeejm.inventory.product.ProductEntity;
+import com.neeejm.inventory.stock.entities.StockEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,8 +43,15 @@ public class LineItemEntity extends BaseEntity {
 			optional = false
 	)
 	@JoinColumn(name = "stock_id")
+	private StockEntity stock;
+
+	@NotNull(message = "Can't be null")
+	@ManyToOne(
+			fetch = FetchType.EAGER,
+			optional = false
+	)
 	@JoinColumn(name = "product_id")
-	private StockProductEntity stockProduct;
+	private ProductEntity product;
 
     @Override
     public boolean equals(Object o) {
