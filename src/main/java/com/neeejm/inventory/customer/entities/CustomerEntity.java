@@ -21,9 +21,11 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.DiscriminatorFormula;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.neeejm.inventory.common.entities.AddressEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.common.util.validators.annotations.ValidPhoneNumber;
+import com.neeejm.inventory.customer.CustomerDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +43,7 @@ import lombok.experimental.SuperBuilder;
     discriminatorType = DiscriminatorType.STRING
 )
 @DiscriminatorFormula("case when name is null then 'person' else 'company' end")
+@JsonDeserialize(using = CustomerDeserializer.class)
 @Getter
 @Setter
 @ToString
