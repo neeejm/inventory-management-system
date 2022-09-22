@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neeejm.inventory.common.entities.AddressEntity;
+import com.neeejm.inventory.customer.entities.CompanyEntity;
 import com.neeejm.inventory.customer.entities.CustomerEntity;
 import com.neeejm.inventory.customer.entities.PersonEntity;
 import com.neeejm.inventory.customer.repositories.CompanyRepository;
@@ -61,6 +62,25 @@ public class CustomerDeserializer extends StdDeserializer<CustomerEntity> {
 
     private CustomerEntity getApproriateEntity(JsonNode body) throws JsonProcessingException, IllegalArgumentException {
         if (body.get("name") == null) {
+            return buildPerson(body);
+        } else {
+            return buildCompany(body);
+        }
+    }
+
+    private Set<AddressEntity> convertToSetOfAddresses(JsonNode data) throws JsonProcessingException, IllegalArgumentException {
+        ObjectMapper mapper = new ObjectMapper();
+        Set<AddressEntity> addresses = new HashSet<>();
+
+        Iterator<JsonNode> iter = data.elements();
+        while (iter.hasNext()) {
+            addresses.add(mapper.treeToValue(iter.next(), AddressEntity.class));
+        }
+
+        return addresses;
+    }
+
+    private PersonEntity buildPerson(JsonNode body) throws JsonProcessingException, IllegalArgumentException {
             return PersonEntity.builder()
                     .email(
                         body.get("email") != null
@@ -93,21 +113,35 @@ public class CustomerDeserializer extends StdDeserializer<CustomerEntity> {
                         : null
                     )
                     .build();
-        } else {
-            return null;
-        }
     }
 
-    private Set<AddressEntity> convertToSetOfAddresses(JsonNode data) throws JsonProcessingException, IllegalArgumentException {
-        ObjectMapper mapper = new ObjectMapper();
-        Set<AddressEntity> addresses = new HashSet<>();
-
-        Iterator<JsonNode> iter = data.elements();
-        while (iter.hasNext()) {
-            addresses.add(mapper.treeToValue(iter.next(), AddressEntity.class));
-        }
-
-        return addresses;
+    private CompanyEntity buildCompany(JsonNode body) throws JsonProcessingException, IllegalArgumentException {
+            return CompanyEntity.builder()
+                    .email(
+                        body.get("email") != null
+                        ? body.get("email").asText()
+                        : null
+                    )
+                    .primaryPhone(
+                        body.get("primaryPhone") != null
+                        ? body.get("primaryPhone").asText()
+                        : null
+                    )
+                    .secondaryPhone(
+                        body.get("secondaryPhone") != null
+                        ? body.get("secondaryPhone").asText()
+                        : null
+                    )
+                    .addresses(
+                        body.get("addresses") != null
+                        ? convertToSetOfAddresses(body.get("addresses"))
+                        : null
+                    )
+                    .name(
+                        body.get("name") != null
+                        ? body.get("name").asText()
+                        : null
+                    )
+                    .build();
     }
-
 }
