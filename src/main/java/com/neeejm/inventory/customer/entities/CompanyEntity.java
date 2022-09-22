@@ -2,12 +2,13 @@ package com.neeejm.inventory.customer.entities;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.Hibernate;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class CompanyEntity extends CustomerEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         CompanyEntity company = (CompanyEntity) o;
         return getId() != null && Objects.equals(getId(), company.getId());
     }
