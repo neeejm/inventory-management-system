@@ -1,14 +1,20 @@
 package com.neeejm.inventory.customer;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.neeejm.inventory.common.entities.AddressEntity;
 import com.neeejm.inventory.customer.entities.CustomerEntity;
 import com.neeejm.inventory.customer.entities.PersonEntity;
 import com.neeejm.inventory.customer.repositories.CompanyRepository;
@@ -53,7 +59,7 @@ public class CustomerDeserializer extends StdDeserializer<CustomerEntity> {
         return null;
     }
 
-    private CustomerEntity getApproriateEntity(JsonNode body) {
+    private CustomerEntity getApproriateEntity(JsonNode body) throws JsonProcessingException, IllegalArgumentException {
         if (body.get("name") == null) {
             return PersonEntity.builder()
                     .email(
@@ -71,17 +77,11 @@ public class CustomerDeserializer extends StdDeserializer<CustomerEntity> {
                         ? body.get("secondaryPhone").asText()
                         : null
                     )
-                    // .addresses(body.findValuesAsText("addresses").stream().map(v -> {
-                    // log.info("@@@: {}", v);
-                    // try {
-                    // return mapper.readValue(v, AddressEntity.class);
-                    // } catch (JsonMappingException e) {
-                    // e.printStackTrace();
-                    // } catch (JsonProcessingException e) {
-                    // e.printStackTrace();
-                    // }
-                    // return null;
-                    // }).collect(Collectors.toSet()))
+                    .addresses(
+                        body.get("addresses") != null
+                        ? convertToSetOfAddresses(body.get("addresses"))
+                        : null
+                    )
                     .firstName(
                         body.get("firstName") != null
                         ? body.get("firstName").asText()
@@ -96,6 +96,18 @@ public class CustomerDeserializer extends StdDeserializer<CustomerEntity> {
         } else {
             return null;
         }
+    }
+
+    private Set<AddressEntity> convertToSetOfAddresses(JsonNode data) throws JsonProcessingException, IllegalArgumentException {
+        ObjectMapper mapper = new ObjectMapper();
+        Set<AddressEntity> addresses = new HashSet<>();
+
+        Iterator<JsonNode> iter = data.elements();
+        while (iter.hasNext()) {
+            addresses.add(mapper.treeToValue(iter.next(), AddressEntity.class));
+        }
+
+        return addresses;
     }
 
 }
