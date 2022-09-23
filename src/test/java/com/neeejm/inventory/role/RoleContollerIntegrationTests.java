@@ -51,6 +51,7 @@ public class RoleContollerIntegrationTests {
         role = RoleEntity.builder()
                         .name("role_integration_test")
                         .build();
+
         log.debug("[TEST] Role({}, {}): ", role.getId(), role.getName());
     }
 

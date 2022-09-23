@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@ComponentScan
 public class RoleDTOAssembler
         extends RepresentationModelAssemblerSupport<RoleEntity, RoleDTO> {
 
@@ -29,14 +28,13 @@ public class RoleDTOAssembler
 
     public RoleDTOAssembler() {
         super(RoleContoller.class, RoleDTO.class);
-        // basePath = "/api/v1/";
+        basePath = basePath == null ? "/api/v1/" : basePath;
     }
 
     @Override
     public RoleDTO toModel(RoleEntity role) {
 
         RoleDTO roleModel = createRessource(role);
-        
 
         roleModel.add(Link.of(
                 Urls.getBaseURL() + basePath + "roles/{role_id}")
