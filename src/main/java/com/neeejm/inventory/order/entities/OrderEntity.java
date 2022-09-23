@@ -90,8 +90,7 @@ public class OrderEntity extends BaseEntity {
             fetch = FetchType.EAGER,
             optional = false
     )
-
-    private CustomerEntity client;
+    private CustomerEntity customer;
 
     @NotNull(message = "Can't be null")
     @ManyToOne(
@@ -111,7 +110,7 @@ public class OrderEntity extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         OrderEntity order = (OrderEntity) o;
         return getId() != null && Objects.equals(getId(), order.getId());
     }
