@@ -75,6 +75,7 @@ public class RoleContollerIntegrationTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldReturnEntityNotFoundOnAppendPrivilege() {
         // Given
         String url = basePath + "/roles/{role_id}/privileges/{privilege_id}";
@@ -94,6 +95,7 @@ public class RoleContollerIntegrationTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void testValidation() {
         // Given
         String url = basePath + "/roles";
