@@ -112,7 +112,7 @@ public class OrderIntegrationTest {
                     // .addresses(Set.of(address))
                     .name("comp test")
                     .build();
-        company = companyRepository.saveAndFlush(company);
+        CustomerEntity customer = companyRepository.saveAndFlush(company);
 
         lineItem = LineItemEntity.builder()
                         .quantity(10)
@@ -125,7 +125,7 @@ public class OrderIntegrationTest {
                     .expectedShipmentDate(new Date())
                     .actualShipmentDate(new Date())
                     .type(OrderEntity.Type.SALE.toString())
-                    .customer(company)
+                    .customer(customer)
                     .user(user)
                     .lineItems(Set.of(lineItem))
                     .status(OrderEntity.Status.DRAFT.toString())

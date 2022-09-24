@@ -80,7 +80,7 @@ public class OrderEntity extends BaseEntity {
 
     @NotNull(message = "Can't be null")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    private CompanyEntity customer;
+    private CustomerEntity customer;
 
     @NotNull(message = "Can't be null")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
