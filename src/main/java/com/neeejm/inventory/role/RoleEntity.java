@@ -71,6 +71,7 @@ public class RoleEntity extends BaseEntity {
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
         hash = 31 * hash + (name == null ? 0 : name.hashCode());
         return hash;
     }

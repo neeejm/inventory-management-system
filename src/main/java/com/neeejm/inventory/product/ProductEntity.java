@@ -79,6 +79,7 @@ public class ProductEntity extends BaseEntity {
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
         hash = 31 * hash + (name == null ? 0 : name.hashCode());
         hash = 31 * hash + (reference == null ? 0 : reference.hashCode());
         return hash;

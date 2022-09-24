@@ -60,7 +60,7 @@ public class AddressEntity extends BaseEntity {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
         hash = 31 * hash + (street == null ? 0 : street.hashCode());
         hash = 31 * hash + (zipCode == null ? 0 : zipCode.hashCode());
         return hash;

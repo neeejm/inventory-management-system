@@ -107,7 +107,7 @@ public class OrderEntity extends BaseEntity {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
         hash = 31 * hash + (reference == null ? 0 : reference.hashCode());
         hash = 31 * hash + (type == null ? 0 : type.hashCode());
         return hash;
