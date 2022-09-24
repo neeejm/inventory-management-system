@@ -82,6 +82,9 @@ public class UserEntity extends BaseEntity{
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + (email == null ? 0 : email.hashCode());
+        hash = 31 * hash + (password == null ? 0 : password.hashCode());
+        return hash;
     }
 }

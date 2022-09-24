@@ -16,12 +16,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
 import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
+import com.neeejm.inventory.customer.entities.CompanyEntity;
 import com.neeejm.inventory.customer.entities.CustomerEntity;
 import com.neeejm.inventory.user.UserEntity;
 
@@ -68,35 +68,22 @@ public class OrderEntity extends BaseEntity {
 
     @Column(columnDefinition = "text")
     private String terms;
-    
-    @OneToMany(
-    		fetch = FetchType.EAGER,
-    		cascade = CascadeType.ALL
-    	)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     @Builder.Default
     private Set<LineItemEntity> lineItems = new HashSet<>();
 
-    @URL(
-            message = "Not a valid document URL",
-            protocol = "https",
-            regexp = "(\\.pdf)$"
-    )
+    @URL(message = "Not a valid document URL", protocol = "https", regexp = "(\\.pdf)$")
     @Column(unique = true)
     private String invoiceUrl;
 
     @NotNull(message = "Can't be null")
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    private CustomerEntity customer;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private CompanyEntity customer;
 
     @NotNull(message = "Can't be null")
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private UserEntity user;
 
     public enum Type {
@@ -109,14 +96,20 @@ public class OrderEntity extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || this.getClass() != o.getClass())
+            return false;
         OrderEntity order = (OrderEntity) o;
         return getId() != null && Objects.equals(getId(), order.getId());
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + (reference == null ? 0 : reference.hashCode());
+        hash = 31 * hash + (type == null ? 0 : type.hashCode());
+        return hash;
     }
 }

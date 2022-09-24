@@ -39,7 +39,7 @@ public class UserSeeder {
 
     private void saveAdminUser() {
         UserEntity user = UserEntity.builder()
-                .email("admin@gmail.com")
+                .email("admin@mail.com")
                 .firstName("fadmin")
                 .lastName("ladmin")
                 .username("admin")

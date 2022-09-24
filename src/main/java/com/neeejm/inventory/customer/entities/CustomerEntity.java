@@ -87,6 +87,10 @@ public abstract class CustomerEntity extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + (email == null ? 0 : email.hashCode());
+        hash = 31 * hash + (primaryPhone == null ? 0 : primaryPhone.hashCode());
+        return hash;
     }
 }

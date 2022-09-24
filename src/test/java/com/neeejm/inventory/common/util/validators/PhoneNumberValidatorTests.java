@@ -22,6 +22,19 @@ class PhoneNumberValidatorTests {
     }
 
     @Test
+    void shouldBeAValidPhoneWhenNullableIsTrue() {
+        // Given
+        phoneNumberValidator.setNullable(true);
+        String phoneNumber = null;
+
+        // When
+        boolean expected = phoneNumberValidator.isValid(phoneNumber, null);
+
+        // Then
+        assertThat(expected).isTrue();
+    }
+
+    @Test
     @DisplayName("Should not be a valid phone number")
     void notAValidPhoneNumber() {
         // Given

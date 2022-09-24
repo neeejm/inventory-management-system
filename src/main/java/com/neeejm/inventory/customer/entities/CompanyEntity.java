@@ -35,9 +35,4 @@ public class CompanyEntity extends CustomerEntity{
         CompanyEntity company = (CompanyEntity) o;
         return getId() != null && Objects.equals(getId(), company.getId());
     }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

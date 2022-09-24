@@ -63,6 +63,9 @@ public class LineItemEntity extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + (quantity == null ? 0 : quantity.hashCode());
+        return hash;
     }
 }

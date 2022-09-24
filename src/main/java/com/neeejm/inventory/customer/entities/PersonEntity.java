@@ -38,9 +38,4 @@ public class PersonEntity extends CustomerEntity {
         PersonEntity person = (PersonEntity) o;
         return getId() != null && Objects.equals(getId(), person.getId());
     }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
