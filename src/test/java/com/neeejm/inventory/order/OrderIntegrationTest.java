@@ -48,7 +48,6 @@ public class OrderIntegrationTest {
     private OrderEntity order;
     private CompanyEntity company;
     private UserEntity user;
-    private CategoryEntity subcategory;
     private ProductEntity product;
     private StockEntity stock;
     private LineItemEntity lineItem;
@@ -60,8 +59,6 @@ public class OrderIntegrationTest {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
     private StockRepository stockRepository;
 
     @Autowired
@@ -69,51 +66,16 @@ public class OrderIntegrationTest {
 
     @BeforeEach
     void setup() {
-        user = userRepository.findByEmail("admin@mail.com").get();
+        user = userRepository.findByEmail("admin@mail.com").orElseThrow();
+        company = companyRepository.findByEmail("comp1@mail.com").orElseThrow();
+        product = productRepository.findByReference("p1").orElseThrow();
+        stock = stockRepository.findByName("stock 1").orElseThrow();
+    }
 
-        AddressEntity address = AddressEntity.builder()
-                                    .country("country")
-                                    .city("city")
-                                    .street("street")
-                                    .zipCode("40000")
-                                    .build();
-
-        CategoryEntity category = CategoryEntity.builder()
-                                    .name("parent")
-                                    .type(CategoryEntity.CategoryType.PARENT_CATEGORY.toString())
-                                    .build();
-        category = categoryRepository.saveAndFlush(category);
-
-        subcategory = CategoryEntity.builder()
-                        .name("sub")
-                        .type(CategoryEntity.CategoryType.SUBCATEGORY.toString())
-                        .parentCategory(category)
-                        .build();
-        subcategory = categoryRepository.saveAndFlush(subcategory);
-
-        product = ProductEntity.builder()
-                        .name("product")
-                        .costPrice(new BigDecimal(15))
-                        .unitPrice(new BigDecimal(16))
-                        .reference("x123")
-                        .subcategory(subcategory)
-                        .build();
-        product = productRepository.saveAndFlush(product);
-
-        stock = StockEntity.builder()
-                    .name("stocki")
-                    .address(address)
-                    .build();
-        stock = stockRepository.saveAndFlush(stock);
-
-        company = CompanyEntity.builder()
-                    .email("comptest@mail.com")
-                    .primaryPhone("+447716535176")
-                    // .addresses(Set.of(address))
-                    .name("comp test")
-                    .build();
-        CustomerEntity customer = companyRepository.saveAndFlush(company);
-
+    @Test
+    @Transient
+    void shouldAddOrder() {
+        // Given
         lineItem = LineItemEntity.builder()
                         .quantity(10)
                         .product(product)
@@ -125,24 +87,20 @@ public class OrderIntegrationTest {
                     .expectedShipmentDate(new Date())
                     .actualShipmentDate(new Date())
                     .type(OrderEntity.Type.SALE.toString())
-                    .customer(customer)
+                    .customer(company)
                     .user(user)
                     .lineItems(Set.of(lineItem))
                     .status(OrderEntity.Status.DRAFT.toString())
                     .build();
-    }
 
-    @Test
-    @Transient
-    void shouldAddOrder() {
         String url = basePath + "/orders";
 
         // When
         // Then
-        wClient.post()
+        wClient.get()
                 .uri(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(order)
+                // .contentType(MediaType.APPLICATION_JSON)
+                // .bodyValue(order)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(APPLICATION_HAL_JSON);
