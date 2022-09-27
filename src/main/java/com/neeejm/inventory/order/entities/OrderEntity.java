@@ -79,8 +79,8 @@ public class OrderEntity extends BaseEntity {
     private String invoiceUrl;
 
     @NotNull(message = "Can't be null")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    private CustomerEntity customer;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.PERSIST)
+    private CompanyEntity customer;
 
     @NotNull(message = "Can't be null")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

@@ -73,7 +73,6 @@ public class OrderIntegrationTest {
     }
 
     @Test
-    @Transient
     void shouldAddOrder() {
         // Given
         lineItem = LineItemEntity.builder()
@@ -87,8 +86,8 @@ public class OrderIntegrationTest {
                     .expectedShipmentDate(new Date())
                     .actualShipmentDate(new Date())
                     .type(OrderEntity.Type.SALE.toString())
-                    .customer(company)
                     .user(user)
+                    .customer(company)
                     .lineItems(Set.of(lineItem))
                     .status(OrderEntity.Status.DRAFT.toString())
                     .build();
@@ -97,10 +96,10 @@ public class OrderIntegrationTest {
 
         // When
         // Then
-        wClient.get()
+        wClient.post()
                 .uri(url)
-                // .contentType(MediaType.APPLICATION_JSON)
-                // .bodyValue(order)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(order)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(APPLICATION_HAL_JSON);

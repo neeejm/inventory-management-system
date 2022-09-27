@@ -83,7 +83,7 @@ public class RestExceptionHandler {
 
         Set<ValidationError> validationErrors = new HashSet<>();
         e.getConstraintViolations().forEach(v -> {
-            log.info("validator {} / {}", v.getMessageTemplate(), v.getPropertyPath());
+            log.info("validator {} / {}", v.getPropertyPath(), v.getMessageTemplate());
             validationErrors.add(new ValidationError(
                     v.getPropertyPath().toString(),
                     v.getMessageTemplate()));
