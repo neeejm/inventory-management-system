@@ -2,8 +2,11 @@ package com.neeejm.inventory.category;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,31 +30,22 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryEntity extends BaseEntity {
-    // @NotBlank(message = "Can't ne blank")
+
     @Column(nullable = false, unique = true)
     private String name;
 
-    // @NotBlank(message = "Can't be blank")
     @Column(nullable = false)
-    // @ValidEnum(enumClass = CategoryType.class)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @ManyToOne(
-        fetch = FetchType.EAGER
+        fetch = FetchType.EAGER,
+        cascade = CascadeType.REMOVE
     )
     @JoinColumn(name = "parent_category_id")
-    // @ValidCategory(type = CategoryType.PARENT_CATEGORY, nullable = true)
     private CategoryEntity parentCategory;
 
-    // @OneToMany(
-    //         fetch = FetchType.EAGER,
-    //         cascade = CascadeType.ALL,
-    //         mappedBy = "parentCategory"
-    // )
-    // @Builder.Default
-    // private Set<CategoryEntity> subcategories = new HashSet<>();
-
-    public enum CategoryType {
+    public enum Type {
         PARENT_CATEGORY,
         SUBCATEGORY
     }
