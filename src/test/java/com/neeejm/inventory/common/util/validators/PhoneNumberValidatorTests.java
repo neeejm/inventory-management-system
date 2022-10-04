@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.neeejm.inventory.common.utils.validators.PhoneNumberValidator;
+
 class PhoneNumberValidatorTests {
     private final PhoneNumberValidator phoneNumberValidator = new PhoneNumberValidator();
 

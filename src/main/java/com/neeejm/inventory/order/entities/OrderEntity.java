@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidEnum;
 import com.neeejm.inventory.customer.entities.CompanyEntity;
 import com.neeejm.inventory.customer.entities.CustomerEntity;
 import com.neeejm.inventory.user.UserEntity;

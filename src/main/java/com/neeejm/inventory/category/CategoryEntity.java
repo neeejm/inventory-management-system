@@ -11,8 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidCategory;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,12 +36,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CategoryEntity extends BaseEntity {
 
+    @NotBlank(message = "Can't be blank")
     @Column(nullable = false, unique = true)
     private String name;
 
+    @ValidEnum(enumClass = Type.class)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    private String type;
 
     @ManyToOne(
         fetch = FetchType.EAGER,

@@ -1,10 +1,10 @@
-package com.neeejm.inventory.common.util;
+package com.neeejm.inventory.common.utils;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-public class Urls {
+public class UrlsUtil {
     
-    private Urls() {
+    private UrlsUtil() {
         throw new IllegalStateException("Utility Class");
     }
 

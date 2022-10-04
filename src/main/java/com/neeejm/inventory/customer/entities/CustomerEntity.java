@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.neeejm.inventory.common.entities.AddressEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidPhoneNumber;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidPhoneNumber;
 import com.neeejm.inventory.customer.CustomerDeserializer;
 
 import lombok.AllArgsConstructor;

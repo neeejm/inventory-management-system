@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -15,7 +15,6 @@
     },
     "type": {
         "description": "Indentify the type of a category",
-        "type": "string",
         "enum": ["parent_category", "subcategory"]
     },
     "parentCategory": {

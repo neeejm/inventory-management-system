@@ -1,9 +1,9 @@
-package com.neeejm.inventory.common.util.validators.annotations;
+package com.neeejm.inventory.common.utils.validators.annotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.neeejm.inventory.common.util.validators.PhoneNumberValidator;
+import com.neeejm.inventory.common.utils.validators.PhoneNumberValidator;
 
 import java.lang.annotation.*;
 

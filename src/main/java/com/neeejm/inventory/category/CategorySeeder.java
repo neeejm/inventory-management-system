@@ -24,13 +24,13 @@ public class CategorySeeder {
             CategoryEntity category = categoryRepository.save(
                 CategoryEntity.builder()
                         .name("default category")
-                        .type(CategoryEntity.CategoryType.PARENT_CATEGORY.toString())
+                        .type(CategoryEntity.Type.PARENT_CATEGORY.toString())
                         .build()
             );
             categoryRepository.save(
                 CategoryEntity.builder()
                         .name("default subcategory")
-                        .type(CategoryEntity.CategoryType.SUBCATEGORY.toString())
+                        .type(CategoryEntity.Type.SUBCATEGORY.toString())
                         .parentCategory(category)
                         .build()
             );
