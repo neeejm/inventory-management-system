@@ -72,7 +72,7 @@ public class OrderIntegrationTest {
         stock = stockRepository.findByName("stock 1").orElseThrow();
     }
 
-    @Test
+    // @Test
     void shouldAddOrder() {
         // Given
         lineItem = LineItemEntity.builder()
