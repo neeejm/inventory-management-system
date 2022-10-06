@@ -45,8 +45,7 @@ public class CategoryEntity extends BaseEntity {
     private String type;
 
     @ManyToOne(
-        fetch = FetchType.EAGER,
-        cascade = CascadeType.REMOVE
+        fetch = FetchType.EAGER
     )
     @JoinColumn(name = "parent_category_id")
     private CategoryEntity parentCategory;
