@@ -2,21 +2,15 @@ package com.neeejm.inventory.category;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.utils.validators.annotations.ValidCategory;
 import com.neeejm.inventory.common.utils.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
