@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Category",
+  "description": "A group that represent certain type of products",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for a category",
+      "type": ["string", "null"],
+      "format": "uuid"
+    },
+    "name": {
+        "description": "String representation for a category",
+        "type": "string"
+    },
+    "type": {
+        "description": "Indentify the type of a category",
+        "enum": ["parent_category", "subcategory"]
+    },
+    "parentCategory": {
+        "description": "Reference another category that englobe the current one",
+        "type": ["object", "null"]
+    }
+  },
+  "required": ["name", "type"]
+}

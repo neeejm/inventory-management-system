@@ -1,4 +1,4 @@
-package com.neeejm.inventory.common.exceptions;
+package com.neeejm.inventory.common;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -22,14 +23,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.neeejm.inventory.common.errors.ApiError;
 import com.neeejm.inventory.common.errors.ValidationError;
-import com.neeejm.inventory.common.util.Urls;
+import com.neeejm.inventory.common.exceptions.MutliEntityException;
+import com.neeejm.inventory.common.utils.UrlsUtil;
 import com.neeejm.inventory.role.ReadOnlyRoleException;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public class RestExceptionHandler {
+public class AppExceptionsHandler {
 
     @Value("#{new Boolean('${app.api-error.include-stacktrace:false}')}")
     private Boolean includeStackTrace;
@@ -75,19 +77,24 @@ public class RestExceptionHandler {
     @ExceptionHandler({
             TransactionSystemException.class
     })
-    private ResponseEntity<ApiError<ValidationError>> handlValidationException(Exception exception) throws Exception {
-
-        ConstraintViolationException e = (ConstraintViolationException) exception.getCause().getCause();
-
-        log.error("Validation Error!", e);
+    private ResponseEntity<ApiError<ValidationError>> handlValidationException(
+            TransactionSystemException exception) throws Exception {
 
         Set<ValidationError> validationErrors = new HashSet<>();
-        e.getConstraintViolations().forEach(v -> {
-            log.info("validator {} / {}", v.getMessageTemplate(), v.getPropertyPath());
-            validationErrors.add(new ValidationError(
-                    v.getPropertyPath().toString(),
-                    v.getMessageTemplate()));
-        });
+
+        if (exception.getRootCause() instanceof ConstraintViolationException) {
+            ConstraintViolationException e = (ConstraintViolationException) exception.getRootCause();
+
+            log.error("Validation Error!", e);
+
+            e.getConstraintViolations().forEach(v -> {
+                log.info("validator {} / {}", v.getPropertyPath(), v.getMessageTemplate());
+                validationErrors.add(new ValidationError(
+                        v.getPropertyPath().toString(),
+                        v.getMessageTemplate()));
+            });
+        }
+
         return handleErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY,
                 validationErrors,
@@ -123,14 +130,14 @@ public class RestExceptionHandler {
                             status,
                             getErrorMessages(exception),
                             getStackTrace(exception),
-                            Urls.getRequestUrl()));
+                            UrlsUtil.getRequestUrl()));
         }
 
         return ResponseEntity.status(status).body(
                 new ApiError<String>(
                         status,
                         getErrorMessages(exception),
-                        Urls.getRequestUrl()));
+                        UrlsUtil.getRequestUrl()));
     }
 
     private <T> ResponseEntity<ApiError<T>> handleErrorResponse(
@@ -144,14 +151,14 @@ public class RestExceptionHandler {
                             status,
                             msgs,
                             getStackTrace(exception),
-                            Urls.getRequestUrl()));
+                            UrlsUtil.getRequestUrl()));
         }
 
         return ResponseEntity.status(status).body(
                 new ApiError<>(
                         status,
                         msgs,
-                        Urls.getRequestUrl()));
+                        UrlsUtil.getRequestUrl()));
     }
 
     private String getStackTrace(Exception exception) {

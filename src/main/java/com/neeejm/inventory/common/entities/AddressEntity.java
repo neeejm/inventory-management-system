@@ -1,16 +1,22 @@
 package com.neeejm.inventory.common.entities;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnDefault;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.Objects;
+
+import org.hibernate.annotations.ColumnDefault;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "address")
@@ -46,13 +52,17 @@ public class AddressEntity extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         AddressEntity address = (AddressEntity) o;
         return getId() != null && Objects.equals(getId(), address.getId());
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
+        hash = 31 * hash + (street == null ? 0 : street.hashCode());
+        hash = 31 * hash + (zipCode == null ? 0 : zipCode.hashCode());
+        return hash;
     }
 }

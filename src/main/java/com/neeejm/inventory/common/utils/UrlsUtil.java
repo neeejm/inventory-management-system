@@ -1,9 +1,13 @@
-package com.neeejm.inventory.common.util;
+package com.neeejm.inventory.common.utils;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-public class Urls {
+public class UrlsUtil {
     
+    private UrlsUtil() {
+        throw new IllegalStateException("Utility Class");
+    }
+
     public static String getBaseURL() {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()

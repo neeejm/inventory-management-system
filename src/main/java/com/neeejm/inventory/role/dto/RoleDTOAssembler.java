@@ -4,12 +4,13 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import com.neeejm.inventory.common.util.Urls;
+import com.neeejm.inventory.common.utils.UrlsUtil;
 import com.neeejm.inventory.privilege.PrivilegeEntity;
 import com.neeejm.inventory.privilege.dto.PrivilegeDTO;
 import com.neeejm.inventory.role.RoleContoller;
@@ -19,34 +20,32 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@ComponentScan
 public class RoleDTOAssembler
         extends RepresentationModelAssemblerSupport<RoleEntity, RoleDTO> {
 
-    // @Value("${spring.data.rest.base-path}")
+    @Value("${spring.data.rest.base-path}")
     private String basePath;
 
     public RoleDTOAssembler() {
         super(RoleContoller.class, RoleDTO.class);
-        basePath = "/api/v1/";
+        basePath = basePath == null ? "/api/v1/" : basePath;
     }
 
     @Override
     public RoleDTO toModel(RoleEntity role) {
 
         RoleDTO roleModel = createRessource(role);
-        
 
         roleModel.add(Link.of(
-                Urls.getBaseURL() + basePath + "roles/{role_id}")
+                UrlsUtil.getBaseURL() + basePath + "roles/{role_id}")
                 .withSelfRel()
                 .expand(role.getId()));
         roleModel.add(Link.of(
-                Urls.getBaseURL() + basePath + "roles/{role_id}")
+                UrlsUtil.getBaseURL() + basePath + "roles/{role_id}")
                 .withRel("role")
                 .expand(role.getId()));
         roleModel.add(Link.of(
-                Urls.getBaseURL() + basePath + "roles/{role_id}/privileges")
+                UrlsUtil.getBaseURL() + basePath + "roles/{role_id}/privileges")
                 .withRel("privileges")
                 .expand(role.getId()));
 
@@ -71,11 +70,11 @@ public class RoleDTOAssembler
                 .name(privilege.getName())
                 .build()
                 .add(Link.of(
-                    Urls.getBaseURL() + basePath + "privileges/{privilege_id}")
+                    UrlsUtil.getBaseURL() + basePath + "privileges/{privilege_id}")
                     .withSelfRel()
                     .expand(privilege.getId()))
                 .add(Link.of(
-                    Urls.getBaseURL() + basePath + "privileges/{privilege_id}")
+                    UrlsUtil.getBaseURL() + basePath + "privileges/{privilege_id}")
                     .withRel("privilege")
                     .expand(privilege.getId())))
                 .collect(Collectors.toSet());

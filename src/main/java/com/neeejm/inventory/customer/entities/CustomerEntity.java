@@ -21,9 +21,13 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.DiscriminatorFormula;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.neeejm.inventory.common.entities.AddressEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidPhoneNumber;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidPhoneNumber;
+import com.neeejm.inventory.customer.CustomerDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,11 +40,12 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "customer")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="customer_type", 
-    discriminatorType = DiscriminatorType.STRING
-)
-@DiscriminatorFormula("case when name is null then 'person' else 'company' end")
+// @DiscriminatorColumn(
+//     name="customer_type", 
+//     discriminatorType = DiscriminatorType.STRING
+// )
+// @DiscriminatorFormula("case when name is null then 'person' else 'company' end")
+@JsonDeserialize(using = CustomerDeserializer.class)
 @Getter
 @Setter
 @ToString
@@ -75,13 +80,17 @@ public abstract class CustomerEntity extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         CustomerEntity customer = (CustomerEntity) o;
         return getId() != null && Objects.equals(getId(), customer.getId());
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
+        hash = 31 * hash + (email == null ? 0 : email.hashCode());
+        hash = 31 * hash + (primaryPhone == null ? 0 : primaryPhone.hashCode());
+        return hash;
     }
 }

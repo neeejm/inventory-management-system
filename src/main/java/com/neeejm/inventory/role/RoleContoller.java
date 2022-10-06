@@ -17,9 +17,6 @@ import com.neeejm.inventory.role.dto.RoleDTO;
 import com.neeejm.inventory.role.dto.RoleDTOAssembler;
 import com.neeejm.inventory.role.service.RoleService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RepositoryRestController
 public class RoleContoller {
     private final RoleService roleService;

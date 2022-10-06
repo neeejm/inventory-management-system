@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.neeejm.inventory.common.util.validators.annotations.ValidEnum;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,6 +66,9 @@ public class PrivilegeEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return this.getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
+        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        return hash;
     }
 }

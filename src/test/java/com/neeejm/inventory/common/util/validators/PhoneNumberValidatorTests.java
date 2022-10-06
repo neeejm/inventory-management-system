@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.neeejm.inventory.common.utils.validators.PhoneNumberValidator;
+
 class PhoneNumberValidatorTests {
     private final PhoneNumberValidator phoneNumberValidator = new PhoneNumberValidator();
 
@@ -13,6 +15,19 @@ class PhoneNumberValidatorTests {
     void validPhoneNumber() {
         // Given
         String phoneNumber = "+447716535176";
+
+        // When
+        boolean expected = phoneNumberValidator.isValid(phoneNumber, null);
+
+        // Then
+        assertThat(expected).isTrue();
+    }
+
+    @Test
+    void shouldBeAValidPhoneWhenNullableIsTrue() {
+        // Given
+        phoneNumberValidator.setNullable(true);
+        String phoneNumber = null;
 
         // When
         boolean expected = phoneNumberValidator.isValid(phoneNumber, null);
