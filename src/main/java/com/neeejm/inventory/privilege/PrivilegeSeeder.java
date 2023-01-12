@@ -11,14 +11,13 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("privilegeSeeder")
 public class PrivilegeSeeder {
     
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
     @EventListener
-    @Order(1)
     public void seed(ContextRefreshedEvent event) {
         loadPrivileges();
     }

@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.URL;
 
 import com.neeejm.inventory.category.CategoryEntity;
 import com.neeejm.inventory.common.entities.BaseEntity;
-import com.neeejm.inventory.common.util.validators.annotations.ValidCategory;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidCategory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,6 +78,10 @@ public class ProductEntity extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        int hash = 7;
+        hash = 31 * hash + (id == null ? 0 : id.hashCode());
+        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (reference == null ? 0 : reference.hashCode());
+        return hash;
     }
 }

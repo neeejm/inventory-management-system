@@ -3,6 +3,7 @@ package com.neeejm.inventory.role;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -14,7 +15,7 @@ import com.neeejm.inventory.privilege.PrivilegeRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("roleSeeder")
 public class RoleSeeder {
 
     @Autowired
@@ -23,7 +24,7 @@ public class RoleSeeder {
     private PrivilegeRepository privilegeRepository;
     
     @EventListener
-    @Order(2)
+    @DependsOn({"privilegeSeeder"})
     public void seed(ContextRefreshedEvent event) {
         loadDefaultRoles();
     }

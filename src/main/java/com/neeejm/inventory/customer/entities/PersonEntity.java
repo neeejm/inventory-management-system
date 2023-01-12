@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 
 import org.hibernate.Hibernate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,10 +37,5 @@ public class PersonEntity extends CustomerEntity {
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         PersonEntity person = (PersonEntity) o;
         return getId() != null && Objects.equals(getId(), person.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }

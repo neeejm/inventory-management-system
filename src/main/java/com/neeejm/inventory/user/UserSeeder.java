@@ -3,6 +3,7 @@ package com.neeejm.inventory.user;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -23,7 +24,7 @@ public class UserSeeder {
     private RoleRepository roleRepository;
 
     @EventListener
-    @Order(3)
+    @DependsOn({"roleSeeder"})
     public void seed(ContextRefreshedEvent event) {
         loadUsers();
     }
@@ -39,7 +40,7 @@ public class UserSeeder {
 
     private void saveAdminUser() {
         UserEntity user = UserEntity.builder()
-                .email("admin@gmail.com")
+                .email("admin@mail.com")
                 .firstName("fadmin")
                 .lastName("ladmin")
                 .username("admin")

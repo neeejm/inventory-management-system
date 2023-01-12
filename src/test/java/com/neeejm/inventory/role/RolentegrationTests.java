@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RoleContollerIntegrationTests {
+public class RolentegrationTests {
 
     private static final String APPLICATION_HAL_JSON = "application/hal+json";
     private static final String APPLICATION_JSON = "application/json";
@@ -51,6 +51,7 @@ public class RoleContollerIntegrationTests {
         role = RoleEntity.builder()
                         .name("role_integration_test")
                         .build();
+
         log.debug("[TEST] Role({}, {}): ", role.getId(), role.getName());
     }
 
@@ -75,6 +76,7 @@ public class RoleContollerIntegrationTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldReturnEntityNotFoundOnAppendPrivilege() {
         // Given
         String url = basePath + "/roles/{role_id}/privileges/{privilege_id}";
@@ -94,6 +96,7 @@ public class RoleContollerIntegrationTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void testValidation() {
         // Given
         String url = basePath + "/roles";

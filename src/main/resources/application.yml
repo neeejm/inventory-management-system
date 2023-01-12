@@ -16,7 +16,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: 'update'
+      ddl-auto: 'create-drop'
     show-sql: 'true'
     properties:
       hibernate:
@@ -28,6 +28,9 @@ spring:
       base-path: '/api/v1'
       default-page-size: 10
 
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: 'true'
 
 server:
   port: '${SERVER_PORT:8089}'

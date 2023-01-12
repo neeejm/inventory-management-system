@@ -1,4 +1,4 @@
-package com.neeejm.inventory.common.util.validators;
+package com.neeejm.inventory.common.utils.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber.CountryCodeSource;
-import com.neeejm.inventory.common.util.validators.annotations.ValidPhoneNumber;
+import com.neeejm.inventory.common.utils.validators.annotations.ValidPhoneNumber;
 
 import lombok.Setter;
 
@@ -30,7 +30,7 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
     }
 
     private boolean isValidNumber(String value) throws NumberParseException {
-        if (nullable && value == null) {
+        if (nullable && (value == null || value.equals(""))) {
             return true;
         }
         return phoneNumberUtil.isValidNumber(
